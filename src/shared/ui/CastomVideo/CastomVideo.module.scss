@@ -1,0 +1,190 @@
+.castomVideo {
+  position: relative;
+  background-color: #000;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  &__title {
+    font-size: 80px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  &__play_pause {
+    min-width: 64px;
+    height: 64px;
+  }
+}
+
+.controlsWrapper {
+  opacity: 1;
+  transition: opacity 2s ease;
+  pointer-events: auto;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none; // отключаем взаимодействие
+}
+
+.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+.iconVideoStart {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.videoPlayer {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+}
+
+.videoPlayerFit {
+  object-fit: cover;
+}
+
+.controls {
+  position: absolute;
+  bottom: 136px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  //   background: rgba(0, 0, 0, 0.6);
+  padding: 0 48px;
+  border-radius: 0 0 12px 12px;
+  justify-content: space-between; /* было: flex-start */
+  z-index: 2;
+}
+
+.volumeContainer {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.volumeBar {
+  width: 461px; // ширина полосы громкости
+  height: 24px;
+  border-radius: 50px;
+  background-color: #ffffff66;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.volumeLevel {
+  height: 24px;
+  background-color: white;
+  border-radius: 50px;
+  transition: width 0.2s ease-in-out;
+}
+
+.controls button:hover {
+  opacity: 0.8;
+}
+
+.time {
+  color: white;
+  font-size: 48px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.progressBarBox {
+  width: 100%;
+  height: 60px;
+  // height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.progressBar {
+  //   position: absolute;
+  //   bottom: 0;
+  //   left: 0;
+  height: 24px;
+  width: 100%;
+  border-radius: 12px;
+  background-color: #ffffff66; // светлая подложка
+  cursor: pointer;
+  //   z-index: 1;
+}
+.progress {
+  height: 100%;
+  width: 0%;
+  border-radius: 12px;
+  background-color: #ffffff;
+  transition: width 0.2s ease-in-out;
+}
+
+.fullscreenHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 80px 80px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: opacity 0.8s ease;
+  z-index: 10;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.btn2 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  padding: 8px 48px;
+}
+
+.fullscreen {
+  border-radius: 0px;
+}
+
+.controls {
+  .fullscreen & {
+    padding: 0 80px;
+    bottom: 192px;
+    border-radius: 0px;
+  }
+}
+
+.btn2 {
+  padding: 0 48px 48px 48px;
+
+  .fullscreen & {
+    padding: 0 80px 80px 80px;
+  }
+}

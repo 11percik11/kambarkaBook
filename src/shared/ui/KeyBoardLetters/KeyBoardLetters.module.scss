@@ -1,0 +1,81 @@
+@use '../../../app/styles/variables.scss' as *;
+
+.keyBoardLetters {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 999;
+    padding-bottom: 80px;
+    pointer-events: none;
+
+    &__container {
+        width: 1912px;
+        height: 528px;
+        padding: 48px 84px;
+        border-radius: 60px;
+        background: #FFFFFF;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 40px;
+        pointer-events: auto;
+    }
+
+    &__key {
+        color: $text-color-brown;
+        font-size: 36px;
+        font-weight: 400;
+        width: 130px;
+        height: 96px;
+        border: none;
+        background-color: #FFFFFF;
+        border-bottom: 1px solid #BE333366;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    &__key-shift {
+        width: 208px;
+        background: #BE33331A;
+    }
+
+    &__key-backspace {
+        width: 206px;
+        background: #BE33331A;
+    }
+
+    &__key-space {
+        width: 1424px;
+        font-weight: 500;
+    }
+
+    &__key-enter {
+        width: 304px;
+        background: $color-right;
+        color: #FFFFFF;
+    }
+
+    &__cross {
+        width: 574px;
+        height: 112px;
+        border-radius: 56px;
+        background: #FFFFFF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        pointer-events: auto;
+    }
+}

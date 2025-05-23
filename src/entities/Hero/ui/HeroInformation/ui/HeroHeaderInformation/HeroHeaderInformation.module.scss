@@ -1,0 +1,12 @@
+.heroHeaderInformation {
+    display: flex;
+    align-items: center;
+
+    &__button {
+        margin-right: 48px;
+    }
+
+    &__title {
+        font-size: 80px;
+    }
+}

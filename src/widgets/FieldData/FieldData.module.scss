@@ -1,0 +1,42 @@
+.fieldData {
+  max-height: 1792px;
+  height: 100%;
+  padding: 48px;
+  background: #ffffff66;
+  border-radius: 60px;
+
+  &__container {
+    max-height: 1696px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      width: 24px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #BE333333;
+      border-radius: 16px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #BE3333;
+      border-radius: 16px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #b01f1f;
+    }
+  }
+
+  &__textDataZero {
+    align-items: center;
+    font-size: 48px;
+    font-weight: 700;
+    width: 100%;
+    text-align: center;
+  }
+}

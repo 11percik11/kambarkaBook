@@ -1,0 +1,67 @@
+.containerDate {
+    padding: 48px;
+    background: #FFFFFF66;
+    width: 1816px;
+    height: 1792px;
+    border-radius: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+
+    &__titelBox {
+        display: flex;
+        gap: 48px;
+    }
+
+  &__boxButton {
+    display: flex;
+    gap: 48px;
+
+    &_button {
+      font-size: 48px;
+      font-weight: 600;
+      color: #ab7979;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    &_buttonActive {
+      color: #be3333;
+      border-bottom: 8px solid #be3333;
+    }
+  }
+
+  &__noDate {
+    width: 100%;
+    font-size: 60px;
+    text-align: center;
+  }
+
+  &__field {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    max-height: 1566px;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 24px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #BE333333;
+      border-radius: 16px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #BE3333;
+      border-radius: 16px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #b01f1f;
+    }
+  }
+}

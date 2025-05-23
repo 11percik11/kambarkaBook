@@ -1,0 +1,15 @@
+.datePage {
+  background: url("../../shared/assets/foto/fon/date.png");
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+
+  &__container {
+    display: flex;
+    gap: 48px;
+  }
+}

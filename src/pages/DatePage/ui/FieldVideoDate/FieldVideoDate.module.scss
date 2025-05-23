@@ -1,0 +1,33 @@
+.fieldVideoDate {
+  width: 1816px;
+  height: 1262px;
+  padding: 48px;
+  background: #ffffff66;
+  border-radius: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__video {
+    width: 1720px;
+    height: 968px;
+    // border-radius: 24px;
+  }
+
+  &__containerInformation {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__date {
+    font-size: 64px;
+    font-weight: 700;
+    color: #be3333;
+  }
+
+  &__description {
+    font-size: 48px;
+    font-weight: 400;
+    color: #4b0e0e;
+  }
+}

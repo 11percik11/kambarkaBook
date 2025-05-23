@@ -1,0 +1,208 @@
+.informationDataID {
+  width: 100%;
+  max-height: 1792px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  &__boxButton {
+    display: flex;
+    gap: 48px;
+
+    &_button {
+      font-size: 48px;
+      font-weight: 600;
+      color: #ab7979;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    &_buttonActive {
+      color: #be3333;
+      border-bottom: 8px solid #be3333;
+    }
+  }
+
+  &__containerInfromation {
+    max-height: 1670px;
+    overflow-y: auto;
+    padding-right: 24px;
+
+    &::-webkit-scrollbar {
+      width: 24px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #be333333;
+      border-radius: 16px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #be3333;
+      border-radius: 16px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #b01f1f;
+    }
+  }
+
+  &__hr {
+    border: 1px solid #4b0e0e;
+  }
+
+  &__field {
+    display: flex;
+    min-height: 107px;
+    padding: 24px 0;
+
+    &_titel {
+      font-size: 48px;
+      font-weight: 700;
+      min-width: 900px;
+      color: #4b0e0e;
+    }
+
+    &_textInformation {
+      font-size: 48px;
+      font-weight: 400;
+    }
+  }
+
+  &__biography {
+    letter-spacing: 2px;
+    line-height: 1.15;
+    font-size: 48px;
+    font-weight: 400;
+    color: #4b0e0e;
+  }
+
+  &_awardsBox {
+    margin-top: 80px;
+
+    &_title {
+      font-size: 48px;
+      font-weight: 700;
+    }
+  }
+
+  &__awards {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 24px;
+
+    &_medal {
+      width: 50%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    &_BoximgMedal {
+      width: 200px;
+      height: 200px;
+    }
+
+    &_imgMedal {
+      width: auto;
+      height: 100%;
+    }
+
+    &_titleMedal {
+      font-size: 48px;
+      font-weight: 400;
+    }
+
+    &_noneAwards {
+      margin-top: 48px;
+      font-size: 48px;
+      font-weight: 400;
+    }
+  }
+
+  &__aditionally {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    &_container {
+      height: 176px;
+      background: #ffffff4d;
+      border-radius: 24px;
+      padding-left: 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    &_img {
+      height: 128px;
+      width: auto;
+      max-width: 128px; // ограничивает ширину
+      object-fit: cover; // обрезает лишнее по ширине
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    &_video {
+      width: 128px;
+      height: 128px;
+      object-fit: fill;
+      overflow: hidden;
+      border-radius: 8px !important;
+    }
+
+    &_title {
+      font-size: 48px;
+      font-weight: 600;
+      color: #be3333;
+    }
+  }
+}
+
+.showModelImg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #72727276;
+
+  &__containerImg {
+    background: #585858;
+    width: 2668px;
+    height: 2000px;
+    border-radius: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  &__image {
+    height: 100%;
+    width: 100%;
+    object-fit: contain; // 🔥 сохраняет пропорции, вписываясь
+  }
+
+  &__cross {
+    position: absolute;
+    top: 80px;
+    right: 80px;
+  }
+}
+
+.informationDataID__aditionally_pdf {
+  width: 100%;
+  height: 500px;
+  border: none;
+  border-radius: 8px;
+}

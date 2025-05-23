@@ -1,0 +1,59 @@
+.InformationMemoryDataID {
+  width: 100%;
+  max-height: 1792px;
+
+  &__containerInfromation {
+    max-height: 1670px;
+    overflow-y: auto;
+    padding-right: 24px;
+
+    &::-webkit-scrollbar {
+      width: 24px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #be333333;
+      border-radius: 16px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #be3333;
+      border-radius: 16px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #b01f1f;
+    }
+  }
+
+  &__hr {
+    border: 1px solid #4b0e0e;
+  }
+
+  &__field {
+    display: flex;
+    min-height: 107px;
+    padding: 24px 0;
+
+    &_titel {
+      font-size: 48px;
+      font-weight: 700;
+      min-width: 900px;
+      color: #4b0e0e;
+    }
+
+    &_textInformation {
+      letter-spacing: 2px;
+      line-height: 1.15;
+      font-size: 48px;
+      font-weight: 400;
+    }
+  }
+
+  &__fieldColumns {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 48px;
+  }
+}

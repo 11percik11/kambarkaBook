@@ -1,0 +1,123 @@
+.modalTime {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: auto;
+  
+  &__container {
+    width: 1194px;
+    height: 1011px;
+    border-radius: 64px;
+    background: white;
+    padding: 64px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: auto;
+  }
+
+  &__h2 {
+    font-size: 80px;
+    font-weight: 700;
+    color:#4B0E0E;
+    margin-bottom: 45px;
+  }
+
+  &__containerText {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  &__message {
+    font-size: 48px;
+    font-weight: 400;
+    color: #4B0E0E;
+    line-height: 1.1;
+  }
+
+  &__note {
+    font-size: 40px;
+    font-weight: 600;
+    color: #C28D8D;
+    line-height: 1;
+  }
+  
+
+
+  &__visable {
+    display: none;
+  }
+
+   &__boxTimer {
+  min-width: 248px;
+  min-height: 248px;
+  border-radius: 50%;
+  background: conic-gradient( #BE333399 var(--progress, 0%), transparent 0) border-box;
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 44px;
+  transition: --progress 0.5s linear;
+  transform: scaleX(-1);
+}
+
+  &__timer {
+    border-radius: 50%;
+    min-width: 220px;
+    min-height: 220px;
+    max-width: 240px;
+    max-height: 240px;
+    font-size: 120px;
+    font-weight: 700;
+    color: #BE3333;
+    // animation: 30s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    transform: scaleX(-1);
+  }
+
+
+  &__buttonsBox {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 64px;
+
+    &_button {
+      width: 517px;
+      height: 155px;
+      border-radius: 40px;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+      font-size: 48px;
+      font-weight: 600;
+
+      &_item1 {
+        background: #BE3333;
+        color: #FFFFFF;
+      }
+
+      &_item2 {
+        border: 6px solid #BE3333;
+        background: none;
+        color: #BE3333;
+      }
+    }
+  }
+}
+
+
