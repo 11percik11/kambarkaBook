@@ -53,6 +53,8 @@
     padding: 48px;
     margin-left: auto;
     border: 8px solid #FFFFFF;
+    z-index: 1002;
+
 
     &__focused {
         border: 8px solid #BE3333;

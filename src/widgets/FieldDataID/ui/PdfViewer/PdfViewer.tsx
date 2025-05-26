@@ -87,9 +87,9 @@ export default function PdfViewer({ url }: PdfViewerProps) {
   if (error) return <div style={{ color: "red" }}>{error}</div>;
 
   return (
-    <div className={styles.pdfViewer} >
+    <div className={styles.pdfViewer}>
       <div
-        // onClick={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
         className={`${styles.viewer} ${numPages >= 3 ? styles.multiPage : ""}`}
       >
         <canvas
@@ -107,8 +107,10 @@ export default function PdfViewer({ url }: PdfViewerProps) {
       </div>
 
       {numPages > 2 && (
-        <div onClick={(e) => e.stopPropagation()}
-             className={styles.pdfViewer__pagination}>
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className={styles.pdfViewer__pagination}
+        >
           {!showKeyBoard && (
             <>
               <button
@@ -142,19 +144,20 @@ export default function PdfViewer({ url }: PdfViewerProps) {
       )}
 
       {showKeyBoard && (
-        <KeyBoardLetters
-          onVisable={() => setShowKeyBoard(false)}
-          keyBoardNumber
-          maxValue={numPages}
-          onInputChange={(val) => {
-            const page = Number(val);
-            if (!isNaN(page) && page >= 1 && page <= numPages) {
-              // Для показа двух страниц — если ввод чётного, показываем предыдущую + текущую
-              const evenCorrected = page % 2 === 0 ? page - 1 : page;
-              setCurrentPage(evenCorrected);
-            }
-          }}
-        />
+        <div onClick={(e) => e.stopPropagation()}>
+          <KeyBoardLetters
+            onVisable={() => setShowKeyBoard(false)}
+            keyBoardNumber
+            maxValue={numPages}
+            onInputChange={(val) => {
+              const page = Number(val);
+              if (!isNaN(page) && page >= 1 && page <= numPages) {
+                const evenCorrected = page % 2 === 0 ? page - 1 : page;
+                setCurrentPage(evenCorrected);
+              }
+            }}
+          />
+        </div>
       )}
     </div>
   );
