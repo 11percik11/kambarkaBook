@@ -77,6 +77,13 @@
   gap: 48px;
 }
 
+.volumeBarContainer {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .volumeBar {
   width: 461px; // ширина полосы громкости
   height: 24px;

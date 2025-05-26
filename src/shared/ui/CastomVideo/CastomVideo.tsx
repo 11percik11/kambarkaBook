@@ -52,7 +52,7 @@ export default function CastomVideo({
     if (video?.paused === false && isFullscreen) {
       controlsTimeoutRef.current = setTimeout(() => {
         setShowControls(false);
-      }, 2000);
+      }, 4000);
     } // 3 секунды
   };
 
@@ -144,13 +144,20 @@ export default function CastomVideo({
 
       setShowControls(true);
 
-      if (!isFs && controlsTimeoutRef.current) {
-        clearTimeout(controlsTimeoutRef.current);
+      if (!isFs) {
+        const video = videoRef.current;
+        if (video && !video.paused) {
+          video.pause();
+          setIsPlaying(false);
+        }
+
+        if (controlsTimeoutRef.current) {
+          clearTimeout(controlsTimeoutRef.current);
+        }
       }
+
       if (isFs) {
         showControlsTemporarily();
-      } else {
-        setShowControls(true);
       }
     };
 
@@ -177,11 +184,12 @@ export default function CastomVideo({
 
     video.currentTime = newTime;
     setCurrentTime(newTime);
+    showControlsTemporarily();
 
     console.log(isEnded);
     if (isEnded) {
-      video.play();
-      setIsPlaying(true);
+      // video.play();
+      // setIsPlaying(true);
       setIsEnded(false); // сброс, т.к. мы перезапустили
     }
   };
@@ -198,6 +206,7 @@ export default function CastomVideo({
     video.volume = newVolume;
     video.muted = newVolume === 0;
 
+    showControlsTemporarily();
     setVolume(newVolume); // 🔥 обновляем состояние
     setIsMuted(video.muted);
   };
@@ -240,7 +249,9 @@ export default function CastomVideo({
 
       <video
         ref={videoRef}
-        className={`${styles.videoPlayer} ${IconVideo && !isFullscreen && styles.videoPlayerFit}`}
+        className={`${styles.videoPlayer} ${
+          IconVideo && !isFullscreen && styles.videoPlayerFit
+        }`}
         src={src}
         poster={poster}
         controls={false}
@@ -269,13 +280,19 @@ export default function CastomVideo({
               <div onClick={toggleMute}>
                 <img src={getVolumeIcon()} alt="Volume Icon" />
               </div>
-              <div className={styles.volumeBar} onClick={handleVolumeClick}>
-                <div
-                  className={styles.volumeLevel}
-                  style={{
-                    width: isMuted ? "0%" : `${volume * 100}%`,
-                  }}
-                />
+
+              <div
+                className={styles.volumeBarContainer}
+                onClick={handleVolumeClick}
+              >
+                <div className={styles.volumeBar}>
+                  <div
+                    className={styles.volumeLevel}
+                    style={{
+                      width: isMuted ? "0%" : `${volume * 100}%`,
+                    }}
+                  />
+                </div>
               </div>
             </div>
             <span className={styles.time}>

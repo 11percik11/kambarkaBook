@@ -1,6 +1,8 @@
 @use "../../app/styles/variables.scss" as *;
 
 .mainPage {
+  min-width: 3840px;
+  min-height: 2160px;
   position: relative; // Для позиционирования псевдоэлемента
   width: 100vw;
   height: 100vh;

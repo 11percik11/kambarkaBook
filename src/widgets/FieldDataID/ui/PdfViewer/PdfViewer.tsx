@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import styles from "./PdfClass.module.scss";
 import * as pdfjsLib from "pdfjs-dist";
-import "pdfjs-dist/web/pdf_viewer.css";
+import VectorLeft from "../../../../shared/assets/svg/VectorLeft.svg";
+import VectorRight from "../../../../shared/assets/svg/VectorRight.svg";
+import KeyBoardLetters from "../../../../shared/ui/KeyBoardLetters/KeyBoardLetters";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
@@ -9,126 +12,150 @@ interface PdfViewerProps {
 }
 
 export default function PdfViewer({ url }: PdfViewerProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef1 = useRef<HTMLCanvasElement>(null);
+  const canvasRef2 = useRef<HTMLCanvasElement>(null);
   const [error, setError] = useState<string | null>(null);
+  const [pdfDoc, setPdfDoc] = useState<any>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [numPages, setNumPages] = useState(0);
+  const [showKeyBoard, setShowKeyBoard] = useState(false);
 
   useEffect(() => {
-    const renderPDF = async () => {
+    const loadPdf = async () => {
       try {
         setError(null);
+        setCurrentPage(1);
 
-        // 1. Загружаем PDF вручную
         const response = await fetch(url);
         if (!response.ok) throw new Error("Ошибка загрузки PDF");
 
         const blob = await response.blob();
-        const blobUrl = URL.createObjectURL(blob); // создаем blob URL
+        const blobUrl = URL.createObjectURL(blob);
 
-        // 2. Загружаем в PDF.js
         const loadingTask = pdfjsLib.getDocument(blobUrl);
         const pdf = await loadingTask.promise;
-        const page = await pdf.getPage(1);
-        const viewport = page.getViewport({ scale: 1.5 });
+        setPdfDoc(pdf);
+        setNumPages(pdf.numPages);
 
-        const canvas = canvasRef.current;
-        const context = canvas?.getContext("2d");
-
-        if (canvas && context) {
-          canvas.width = viewport.width;
-          canvas.height = viewport.height;
-
-          await page.render({
-            canvasContext: context,
-            viewport,
-          }).promise;
-        }
-
-        URL.revokeObjectURL(blobUrl); // очистка
+        URL.revokeObjectURL(blobUrl);
       } catch (err) {
-        console.error("Ошибка рендеринга PDF:", err);
-        setError("Не удалось загрузить PDF. Проверьте ссылку или CORS.");
+        console.error("Ошибка загрузки PDF:", err);
+        setError("Не удалось загрузить PDF.");
       }
     };
 
-    if (url) renderPDF();
+    if (url) loadPdf();
   }, [url]);
 
-  if (error) {
-    return <div style={{ color: "red", padding: "10px" }}>{error}</div>;
-  }
+  useEffect(() => {
+    const renderPages = async () => {
+      if (!pdfDoc) return;
 
-  return <canvas ref={canvasRef} />;
+      const render = async (
+        pageNum: number,
+        canvasRef: React.RefObject<HTMLCanvasElement | null>
+      ) => {
+        if (!canvasRef.current || pageNum > numPages) return;
+        const page = await pdfDoc.getPage(pageNum);
+        const viewport = page.getViewport({ scale: 1.5 });
+        const canvas = canvasRef.current;
+        const context = canvas.getContext("2d");
+
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        await page.render({ canvasContext: context!, viewport }).promise;
+      };
+
+      await render(currentPage, canvasRef1);
+
+      if (currentPage + 1 <= numPages) {
+        await render(currentPage + 1, canvasRef2);
+        canvasRef2.current!.style.display = "block";
+      } else {
+        if (canvasRef2.current) canvasRef2.current.style.display = "none";
+      }
+    };
+
+    renderPages();
+  }, [pdfDoc, currentPage, numPages]);
+
+  const handlePrev = () => setCurrentPage((prev) => Math.max(prev - 2, 1));
+  const handleNext = () =>
+    setCurrentPage((prev) => Math.min(prev + 2, numPages));
+
+  if (error) return <div style={{ color: "red" }}>{error}</div>;
+
+  return (
+    <div className={styles.pdfViewer} >
+      <div
+        // onClick={(e) => e.stopPropagation()}
+        className={`${styles.viewer} ${numPages >= 3 ? styles.multiPage : ""}`}
+      >
+        <canvas
+          ref={canvasRef1}
+          className={`${styles.canvas} ${
+            numPages >= 3 ? styles.canvasMore : ""
+          }`}
+        />
+        <canvas
+          ref={canvasRef2}
+          className={`${styles.canvas} ${
+            numPages >= 3 ? styles.canvasMore : ""
+          }`}
+        />
+      </div>
+
+      {numPages > 2 && (
+        <div onClick={(e) => e.stopPropagation()}
+             className={styles.pdfViewer__pagination}>
+          {!showKeyBoard && (
+            <>
+              <button
+                className={styles.pdfViewer__buttonPagination}
+                onClick={handlePrev}
+                disabled={currentPage <= 1}
+              >
+                <img src={VectorLeft} alt="" />
+              </button>
+              <div
+                onClick={() => setShowKeyBoard(true)}
+                className={styles.pdfViewer__Boxpage}
+              >
+                <span className={styles.pdfViewer__page}>
+                  Страницы {currentPage}
+                  {currentPage + 1 <= numPages
+                    ? ` – ${currentPage + 1}`
+                    : ""} / {numPages}
+                </span>
+              </div>
+              <button
+                className={styles.pdfViewer__buttonPagination}
+                onClick={handleNext}
+                disabled={currentPage + 1 > numPages}
+              >
+                <img src={VectorRight} alt="" />
+              </button>
+            </>
+          )}
+        </div>
+      )}
+
+      {showKeyBoard && (
+        <KeyBoardLetters
+          onVisable={() => setShowKeyBoard(false)}
+          keyBoardNumber
+          maxValue={numPages}
+          onInputChange={(val) => {
+            const page = Number(val);
+            if (!isNaN(page) && page >= 1 && page <= numPages) {
+              // Для показа двух страниц — если ввод чётного, показываем предыдущую + текущую
+              const evenCorrected = page % 2 === 0 ? page - 1 : page;
+              setCurrentPage(evenCorrected);
+            }
+          }}
+        />
+      )}
+    </div>
+  );
 }
-
-
-
-// import { useEffect, useRef, useState } from "react";
-// import * as pdfjsLib from "pdfjs-dist";
-// import "pdfjs-dist/web/pdf_viewer.css";
-
-// // Для TypeScript (опционально)
-// pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
-
-// interface PdfViewerProps {
-//   url: string;
-// }
-
-// export default function PdfViewer({ url }: PdfViewerProps) {
-//   const canvasRef = useRef<HTMLCanvasElement>(null);
-//   const [error, setError] = useState<string | null>(null);
-
-//   useEffect(() => {
-//     if (!url) return;
-
-//     const renderPDF = async () => {
-//       try {
-//         setError(null);
-//         const loadingTask = pdfjsLib.getDocument({
-//           url,
-//           // Для поддержки CORS (если сервер не возвращает нужные заголовки)
-//           withCredentials: false,
-//         });
-
-//         const pdf = await loadingTask.promise;
-//         const page = await pdf.getPage(1);
-//         const viewport = page.getViewport({ scale: 1.5 });
-
-//         const canvas = canvasRef.current;
-//         if (!canvas) return;
-
-//         const context = canvas.getContext("2d");
-//         if (!context) return;
-
-//         canvas.height = viewport.height;
-//         canvas.width = viewport.width;
-
-//         await page.render({
-//           canvasContext: context,
-//           viewport,
-//         }).promise;
-//       } catch (err) {
-//         console.error("PDF rendering error:", err);
-//         setError("Не удалось загрузить PDF. Проверьте URL или CORS.");
-//       }
-//     };
-
-//     renderPDF();
-//   }, [url]);
-
-//   if (error) {
-//     return (
-//       <div style={{ color: "red", padding: "10px" }}>
-//         {error}
-//         <br />
-//         <iframe
-//           src={url}
-//           width="1000px"
-//           height="1000px"
-//           style={{ border: "none" }}
-//         />
-//       </div>
-//     );
-//   }
-
-//   return <canvas ref={canvasRef} />;
-// }

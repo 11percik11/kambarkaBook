@@ -11,4 +11,6 @@ export const {
     useGetPersonalDataAcceptQuery,
     useGetPeopleQuery,
     useLazyGetPeopleQuery,
+    useGetMediaQuery,
+    useLazyGetMediaQuery,
 } = HeroApi;

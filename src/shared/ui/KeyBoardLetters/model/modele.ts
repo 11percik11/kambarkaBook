@@ -155,3 +155,56 @@ export const keys: Key[] = [
     class: "key key-enter",
   },
 ];
+
+export const keysNumber: Key[] = [
+  {
+    valueRUS: "1",
+    class: "keyNumber",
+  },
+  {
+    valueRUS: "2",
+    class: "keyNumber",
+  },
+  {
+    valueRUS: "3",
+    class: "keyNumber",
+  },
+  {
+    valueRUS: "4",
+    class: "keyNumber",
+  },
+  {
+    valueRUS: "5",
+    class: "keyNumber",
+  },
+  {
+    valueRUS: "6",
+    class: "keyNumber",
+  },
+  {
+    valueRUS: "7",
+    class: "keyNumber",
+  },
+  {
+    valueRUS: "8",
+    class: "keyNumber",
+  },
+  {
+    valueRUS: "9",
+    class: "keyNumber",
+  },
+  {
+    valueRUS: "backspace",
+    class: "keyNumber key-backspace",
+    icon: "backspace",
+    size: "64",
+  },
+  {
+    valueRUS: "0",
+    class: "keyNumber",
+  },
+  {
+    valueRUS: "Ввод",
+    class: "keyNumber key-enterNumber",
+  }
+];
