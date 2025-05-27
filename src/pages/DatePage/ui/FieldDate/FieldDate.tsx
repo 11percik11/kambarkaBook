@@ -1,3 +1,4 @@
+import SmartText from "../../../../shared/ui/Typograf/Typograf";
 import styles from "./FieldDate.module.scss";
 
 interface FieldDateProps {
@@ -57,7 +58,8 @@ const stripHtmlTags = (html: string): string => {
       }`}
     >
       <div className={styles.fieldDate__date}>{formattedDate}</div>
-      <div className={styles.fieldDate__description}>{cleanDescription}</div>
+      {/* <div className={styles.fieldDate__description}>{cleanDescription}</div> */}
+      <SmartText className={styles.fieldDate__description}>{cleanDescription}</SmartText>
     </div>
   );
 }

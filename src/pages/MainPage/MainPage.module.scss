@@ -101,6 +101,11 @@
         cursor: pointer;
       }
 
+      &_buttonLink {
+        text-decoration: none;
+        color: $text-color-white;
+      }
+
       &_decoration {
         display: flex;
         gap: 48px;

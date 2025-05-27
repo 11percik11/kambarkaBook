@@ -78,7 +78,8 @@ export default function MainPage() {
               </p>
             </div>
             <button className={styles.mainPage__container_boxField_button}>
-              Перейти
+              <a className={styles.mainPage__container_boxField_buttonLink} href="https://www.gosuslugi.ru">Перейти</a>
+              {/* Перейти */}
               <img src={link_Svg} alt="" />
             </button>
           </div>

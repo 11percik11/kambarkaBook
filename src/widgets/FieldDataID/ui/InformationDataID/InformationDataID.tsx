@@ -8,7 +8,6 @@ import FileText from "../../../../shared/assets/svg/File Text.svg";
 import PdfViewer from "../PdfViewer/PdfViewer";
 import SmartText from "../../../../shared/ui/Typograf/Typograf";
 import {
-  useGetMediaQuery,
   useLazyGetMediaQuery,
 } from "../../../../entities/Hero/api/HeroApi";
 
@@ -92,9 +91,10 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                 <div className={styles.informationDataID__field_titel}>
                   Дата рождения
                 </div>
-                <p className={styles.informationDataID__field_textInformation}>
+                {/* <p className={styles.informationDataID__field_textInformation}>
                   {data?.birthDate}
-                </p>
+                </p> */}
+                <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.birthDate}</SmartText>
               </div>
             )}
             {data?.birthPlace && (
@@ -104,11 +104,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   <div className={styles.informationDataID__field_titel}>
                     Место рождения
                   </div>
-                  <p
+                  {/* <p
                     className={styles.informationDataID__field_textInformation}
                   >
                     {data?.birthPlace}
-                  </p>
+                  </p> */}
+                  <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.birthPlace}</SmartText>
                 </div>
               </>
             )}
@@ -139,11 +140,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   <div className={styles.informationDataID__field_titel}>
                     Место призыва, военкомат
                   </div>
-                  <p
+                  {/* <p
                     className={styles.informationDataID__field_textInformation}
                   >
                     {data?.invocationPlace}
-                  </p>
+                  </p> */}
+                  <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.invocationPlace}</SmartText>
                 </div>
               </>
             )}
@@ -154,11 +156,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   <div className={styles.informationDataID__field_titel}>
                     Дата призыва
                   </div>
-                  <p
+                  {/* <p
                     className={styles.informationDataID__field_textInformation}
                   >
                     {data?.invocationDate}
-                  </p>
+                  </p> */}
+                  <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.invocationDate}</SmartText>
                 </div>
               </>
             )}
@@ -169,11 +172,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   <div className={styles.informationDataID__field_titel}>
                     Воинское звание
                   </div>
-                  <p
+                  {/* <p
                     className={styles.informationDataID__field_textInformation}
                   >
                     {data?.militaryRank}
-                  </p>
+                  </p> */}
+                  <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.militaryRank}</SmartText>
                 </div>
               </>
             )}
@@ -184,11 +188,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   <div className={styles.informationDataID__field_titel}>
                     Воинская часть
                   </div>
-                  <p
+                  {/* <p
                     className={styles.informationDataID__field_textInformation}
                   >
                     {data?.armyUnit}
-                  </p>
+                  </p> */}
+                  <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.armyUnit}</SmartText>
                 </div>
               </>
             )}
@@ -199,11 +204,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   <div className={styles.informationDataID__field_titel}>
                     Дата смерти
                   </div>
-                  <p
+                  {/* <p
                     className={styles.informationDataID__field_textInformation}
                   >
                     {data?.deathDate}
-                  </p>
+                  </p> */}
+                  <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.deathDate}</SmartText>
                 </div>
               </>
             )}
@@ -214,11 +220,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   <div className={styles.informationDataID__field_titel}>
                     Место захоронения
                   </div>
-                  <p
+                  {/* <p
                     className={styles.informationDataID__field_textInformation}
                   >
                     {data?.burialPlace}
-                  </p>
+                  </p> */}
+                  <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.burialPlace}</SmartText>
                 </div>
                 <hr className={styles.informationDataID__hr} />
               </>
@@ -244,11 +251,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                           alt=""
                         />
                       </div>
-                      <div
+                      {/* <div
                         className={styles.informationDataID__awards_titleMedal}
                       >
                         {award.title}
-                      </div>
+                      </div> */}
+                      <SmartText tag="div" className={styles.informationDataID__awards_titleMedal}>{award.title}</SmartText>
                     </div>
                   ))}
                 </div>

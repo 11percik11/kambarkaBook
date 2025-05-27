@@ -12,6 +12,7 @@ import Sound_off from "../../assets/svg/Sound_off.svg";
 import { useDispatch } from "react-redux";
 import { modelActive } from "../../../entities/Date/api/ModelSlice";
 import IconVideoStart from "../../assets/svg/IconVideoStart.svg";
+import SmartText from "../Typograf/Typograf";
 
 type CastomVideoProps = {
   src: string;
@@ -240,7 +241,8 @@ export default function CastomVideo({
             showControls ? styles.visible : styles.hidden
           }`}
         >
-          <span className={styles.castomVideo__title}>{title}</span>
+          {/* <span className={styles.castomVideo__title}>{title}</span> */}
+          <SmartText className={styles.castomVideo__title} tag="span">{title}</SmartText>
           <button onClick={exitFullscreen} className={styles.closeBtn}>
             <img src={CrossVideo} alt="" />
           </button>

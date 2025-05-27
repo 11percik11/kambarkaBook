@@ -2,6 +2,7 @@ import styles from ".//FieldVideoDate.module.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store/store";
 import CastomVideo from "../../../../shared/ui/CastomVideo/CastomVideo";
+import SmartText from "../../../../shared/ui/Typograf/Typograf";
 
 export default function FieldVideoDate() {
   const UrlVideo = useSelector((state: RootState) => state.video);
@@ -54,9 +55,7 @@ const stripHtmlTags = (html: string): string => {
             <CastomVideo src={`https://api-kambarka-memory-book.itlabs.top${UrlVideo.video}`} className={styles.fieldVideoDate__video} title={cleanDescription}/>
           <div className={styles.fieldVideoDate__containerInformation}>
             <p className={styles.fieldVideoDate__date}>{formattedDate}</p>
-            <p className={styles.fieldVideoDate__description}>
-              {cleanDescription}
-            </p>
+            <SmartText tag="p" className={styles.fieldVideoDate__description}>{cleanDescription}</SmartText>
           </div>
         </div>
       )}
