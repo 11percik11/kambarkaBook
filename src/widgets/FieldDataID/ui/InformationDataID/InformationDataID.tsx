@@ -7,9 +7,7 @@ import Cross from "../../../../shared/assets/svg/CrossVideo.svg";
 import FileText from "../../../../shared/assets/svg/File Text.svg";
 import PdfViewer from "../PdfViewer/PdfViewer";
 import SmartText from "../../../../shared/ui/Typograf/Typograf";
-import {
-  useLazyGetMediaQuery,
-} from "../../../../entities/Hero/api/HeroApi";
+import { useLazyGetMediaQuery } from "../../../../entities/Hero/api/HeroApi";
 
 interface InformationDataIDProps {
   data?: Hero;
@@ -21,6 +19,8 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
   const [showModelFile, setShowModelFile] = useState(false);
   const [imgModel, setImgModel] = useState("");
   const [fileModel, setFileModel] = useState("");
+  const [showModelVideo, setShowModelVideo] = useState(false);
+  const [videoModel, setVideoModel] = useState("");
 
   const [trigerMedia] = useLazyGetMediaQuery();
 
@@ -48,6 +48,11 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
     console.log(fileModel);
     setShowModelFile(true);
   };
+
+  const handleShowVideo = (videoUrl: string) => {
+  setVideoModel(videoUrl);
+  setShowModelVideo(true);
+};
 
   return (
     <div className={styles.informationDataID}>
@@ -94,7 +99,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                 {/* <p className={styles.informationDataID__field_textInformation}>
                   {data?.birthDate}
                 </p> */}
-                <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.birthDate}</SmartText>
+                <SmartText
+                  tag="p"
+                  className={styles.informationDataID__field_textInformation}
+                >
+                  {data?.birthDate}
+                </SmartText>
               </div>
             )}
             {data?.birthPlace && (
@@ -109,7 +119,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   >
                     {data?.birthPlace}
                   </p> */}
-                  <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.birthPlace}</SmartText>
+                  <SmartText
+                    tag="p"
+                    className={styles.informationDataID__field_textInformation}
+                  >
+                    {data?.birthPlace}
+                  </SmartText>
                 </div>
               </>
             )}
@@ -145,7 +160,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   >
                     {data?.invocationPlace}
                   </p> */}
-                  <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.invocationPlace}</SmartText>
+                  <SmartText
+                    tag="p"
+                    className={styles.informationDataID__field_textInformation}
+                  >
+                    {data?.invocationPlace}
+                  </SmartText>
                 </div>
               </>
             )}
@@ -161,7 +181,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   >
                     {data?.invocationDate}
                   </p> */}
-                  <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.invocationDate}</SmartText>
+                  <SmartText
+                    tag="p"
+                    className={styles.informationDataID__field_textInformation}
+                  >
+                    {data?.invocationDate}
+                  </SmartText>
                 </div>
               </>
             )}
@@ -177,7 +202,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   >
                     {data?.militaryRank}
                   </p> */}
-                  <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.militaryRank}</SmartText>
+                  <SmartText
+                    tag="p"
+                    className={styles.informationDataID__field_textInformation}
+                  >
+                    {data?.militaryRank}
+                  </SmartText>
                 </div>
               </>
             )}
@@ -193,7 +223,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   >
                     {data?.armyUnit}
                   </p> */}
-                  <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.armyUnit}</SmartText>
+                  <SmartText
+                    tag="p"
+                    className={styles.informationDataID__field_textInformation}
+                  >
+                    {data?.armyUnit}
+                  </SmartText>
                 </div>
               </>
             )}
@@ -209,7 +244,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   >
                     {data?.deathDate}
                   </p> */}
-                  <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.deathDate}</SmartText>
+                  <SmartText
+                    tag="p"
+                    className={styles.informationDataID__field_textInformation}
+                  >
+                    {data?.deathDate}
+                  </SmartText>
                 </div>
               </>
             )}
@@ -225,7 +265,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   >
                     {data?.burialPlace}
                   </p> */}
-                  <SmartText tag="p" className={styles.informationDataID__field_textInformation}>{data?.burialPlace}</SmartText>
+                  <SmartText
+                    tag="p"
+                    className={styles.informationDataID__field_textInformation}
+                  >
+                    {data?.burialPlace}
+                  </SmartText>
                 </div>
                 <hr className={styles.informationDataID__hr} />
               </>
@@ -256,7 +301,12 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                       >
                         {award.title}
                       </div> */}
-                      <SmartText tag="div" className={styles.informationDataID__awards_titleMedal}>{award.title}</SmartText>
+                      <SmartText
+                        tag="div"
+                        className={styles.informationDataID__awards_titleMedal}
+                      >
+                        {award.title}
+                      </SmartText>
                     </div>
                   ))}
                 </div>
@@ -285,6 +335,8 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
               const isVideo = ["mp4", "webm", "ogg"].includes(extension || "");
 
               const isPdf = extension === "pdf";
+              // let isPdfClick = false
+              // const [isPdfClick, setIsPdfClick] = useState(false)
 
               return (
                 <div
@@ -292,6 +344,7 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   onClick={() => {
                     if (isPdf) handleShowFile(mediaUrl);
                     else if (isImage) hadleShowImg(mediaUrl);
+                    else if (isVideo) handleShowVideo(mediaUrl); // Добавим это
                   }}
                 >
                   {isPdf && (
@@ -320,6 +373,7 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   {isVideo && (
                     <div onClick={(e) => e.stopPropagation()}>
                       <CastomVideo
+                        // clickIcon={isPdfClick}
                         IconVideo={true}
                         className={styles.informationDataID__aditionally_video}
                         title={extension}
@@ -327,6 +381,7 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                       />
                     </div>
                   )}
+                  
 
                   {!isImage && !isVideo && !isPdf && (
                     <p>Неизвестный формат файла: {extension}</p>
@@ -373,6 +428,23 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
           </div>
         </div>
       )}
+      {showModelVideo && (
+  <div className={styles.showModelImg} onClick={() => setShowModelVideo(false)}>
+    <div className={styles.showModelImg__containerImg}>
+      <video
+        controls
+        className={styles.informationDataID__aditionally_video}
+        src={videoModel}
+      />
+    </div>
+    <div
+      onClick={() => setShowModelVideo(false)}
+      className={styles.showModelImg__cross}
+    >
+      <img src={Cross} alt="" />
+    </div>
+  </div>
+)}
     </div>
   );
 }

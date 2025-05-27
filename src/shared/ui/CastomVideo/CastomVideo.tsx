@@ -20,6 +20,7 @@ type CastomVideoProps = {
   title?: string; // 🔥 передаём заголовок
   className?: string;
   IconVideo?: boolean;
+  clickIcon?: () => void;
 };
 
 export default function CastomVideo({
@@ -28,6 +29,7 @@ export default function CastomVideo({
   title,
   className,
   IconVideo = false,
+  clickIcon,
 }: CastomVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,7 +56,7 @@ export default function CastomVideo({
       controlsTimeoutRef.current = setTimeout(() => {
         setShowControls(false);
       }, 4000);
-    } // 3 секунды
+    } // 4 секунды
   };
 
   const togglePlay = () => {
