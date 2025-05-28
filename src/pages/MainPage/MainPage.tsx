@@ -1,4 +1,4 @@
-import styles from "./mainPage.module.scss";
+import styles from "./MainPage.module.scss";
 import star_Svg from "../../shared/assets/svg/star_Svg.svg";
 import flag_Svg from "../../shared/assets/svg/flag_Svg.svg";
 import link_Svg from "../../shared/assets/svg/link_Svg.svg";
