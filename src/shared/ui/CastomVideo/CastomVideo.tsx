@@ -108,7 +108,6 @@ export default function CastomVideo({
     const video = videoRef.current;
     if (!video) return;
 
-    let animationFrameId;
     let lastUpdateTime = 0;
     const updateInterval = 100; // Обновлять состояние не чаще чем раз в 100мс
 
@@ -117,13 +116,13 @@ export default function CastomVideo({
         setCurrentTime(video.currentTime);
         lastUpdateTime = timestamp;
       }
-      animationFrameId = requestAnimationFrame(handleTimeUpdate);
+      requestAnimationFrame(handleTimeUpdate);
     };
 
     const handleLoadedMetadata = () => {
       setDuration(video.duration);
       // Запускаем плавное обновление времени после загрузки метаданных
-      animationFrameId = requestAnimationFrame(handleTimeUpdate);
+      requestAnimationFrame(handleTimeUpdate);
     };
 
     const handleEnded = () => {
