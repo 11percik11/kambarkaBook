@@ -1,5 +1,5 @@
 import styles from './ButtonNavigate.module.scss';
-import cross from '../../assets/svg/cross_svg.svg';
+import cross from '../../assets/svg/cross_Svg.svg';
 import arrow from '../../assets/svg/arow_Svg.svg';
 
 interface ButtonNavigateProps {
