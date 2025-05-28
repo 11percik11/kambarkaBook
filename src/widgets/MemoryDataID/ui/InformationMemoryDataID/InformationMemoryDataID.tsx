@@ -7,8 +7,6 @@ interface InformationMemoryDataIDProps {
 }
 
 export default function InformationMemoryDataID({data}:InformationMemoryDataIDProps) {
-    console.log(data);
-    
   return (
     <div className={styles.informationDataID}>
         <div className={styles.InformationMemoryDataID__containerInfromation}>

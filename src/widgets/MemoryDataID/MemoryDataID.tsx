@@ -12,7 +12,6 @@ export default function MemoryDataID() {
       const { data, isLoading } = useGetMemorialDataAcceptQuery(number);
       
       if (isLoading || !data) return <div><Loader/></div>;
-      console.log(data?.memorialImages);
       
   return (
     <div className={styles.memoryDataID}>

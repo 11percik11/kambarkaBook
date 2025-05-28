@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ApiResponse } from "../model/types";
 
 interface Video {
     video: string;

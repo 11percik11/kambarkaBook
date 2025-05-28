@@ -6,7 +6,7 @@ import SmartText from "../../../../shared/ui/Typograf/Typograf";
 
 export default function FieldVideoDate() {
   const UrlVideo = useSelector((state: RootState) => state.video);
-  console.log(UrlVideo);
+  // console.log(UrlVideo);
 
 const stripHtmlTags = (html: string): string => {
   return html

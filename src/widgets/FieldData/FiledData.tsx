@@ -7,7 +7,7 @@ import { useLazyGetPeopleQuery } from '../../entities/Hero/api/HeroApi';
 import { addHeroes } from '../../entities/Hero/api/HeroSlice';
 import { useIdle } from '../../features/useInactivityRedirect/IdleContext';
 import { useLocation } from 'react-router-dom';
-import { MemorialImage, MemorialResponseApi } from '../../entities/Memorial/model/types';
+import { MemorialResponseApi } from '../../entities/Memorial/model/types';
 import { useLazyAllMemorialQuery } from '../../entities/Memorial/api/MemorialApi';
 import { addMemorial } from '../../entities/Memorial/api/MemorialSlice';
 import AvatarkaMemorial from '../../shared/ui/AvatarkaMemorial/AvatarkaMemorial';
@@ -18,11 +18,6 @@ export default function FiledData() {
 
   const location = useLocation();
   const NumberSectionId = location.state.sectionId;
-
-
-console.log(NumberSectionId);
-
-
   
   const [currentPage, setCurrentPage] = useState(2);
     const [fetching, setFetching] = useState(false);
@@ -36,9 +31,6 @@ console.log(NumberSectionId);
     if (NumberSectionId == 7 || NumberSectionId == 8 ) {
       ALL_DATA = DataMemorialAll
     }
-    console.log(NumberSectionId);
-    
-    console.log(ALL_DATA);
   
     useEffect(() => {
 

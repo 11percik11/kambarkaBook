@@ -19,8 +19,7 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
   const [showModelFile, setShowModelFile] = useState(false);
   const [imgModel, setImgModel] = useState("");
   const [fileModel, setFileModel] = useState("");
-  const [showModelVideo, setShowModelVideo] = useState(false);
-  const [videoModel, setVideoModel] = useState("");
+  const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
 
   const [trigerMedia] = useLazyGetMediaQuery();
 
@@ -38,21 +37,21 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
       .unwrap()
       .then((blob) => {
         const fileURL = URL.createObjectURL(blob);
-        console.log(fileURL);
+        // console.log(fileURL);
         setFileModel(fileURL);
       })
       .catch((error) => {
         console.error("Ошибка при фильтрации:", error);
       });
 
-    console.log(fileModel);
+    // console.log(fileModel);
     setShowModelFile(true);
   };
 
-  const handleShowVideo = (videoUrl: string) => {
-  setVideoModel(videoUrl);
-  setShowModelVideo(true);
-};
+  //   const handleShowVideo = (videoUrl: string) => {
+  //   setVideoModel(videoUrl);
+  //   setShowModelVideo(true);
+  // };
 
   return (
     <div className={styles.informationDataID}>
@@ -344,7 +343,7 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   onClick={() => {
                     if (isPdf) handleShowFile(mediaUrl);
                     else if (isImage) hadleShowImg(mediaUrl);
-                    else if (isVideo) handleShowVideo(mediaUrl); // Добавим это
+                    else if (isVideo) setActiveVideoUrl(mediaUrl); // Добавим это
                   }}
                 >
                   {isPdf && (
@@ -373,7 +372,8 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                   {isVideo && (
                     <div onClick={(e) => e.stopPropagation()}>
                       <CastomVideo
-                        // clickIcon={isPdfClick}
+                        setFunVideoTriger={() => setActiveVideoUrl(null)}
+                        clickIcon={activeVideoUrl === mediaUrl}
                         IconVideo={true}
                         className={styles.informationDataID__aditionally_video}
                         title={extension}
@@ -381,15 +381,17 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                       />
                     </div>
                   )}
-                  
 
                   {!isImage && !isVideo && !isPdf && (
                     <p>Неизвестный формат файла: {extension}</p>
                   )}
 
-                  <div className={styles.informationDataID__aditionally_title}>
+                  <SmartText
+                    tag="div"
+                    className={styles.informationDataID__aditionally_title}
+                  >
                     {mediaFile.title}
-                  </div>
+                  </SmartText>
                 </div>
               );
             })}
@@ -419,7 +421,6 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
           onClick={() => setShowModelFile(false)}
         >
           <PdfViewer url={fileModel} key={fileModel} />
-
           <div
             onClick={() => setShowModelFile(false)}
             className={styles.showModelImg__cross}
@@ -428,23 +429,6 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
           </div>
         </div>
       )}
-      {showModelVideo && (
-  <div className={styles.showModelImg} onClick={() => setShowModelVideo(false)}>
-    <div className={styles.showModelImg__containerImg}>
-      <video
-        controls
-        className={styles.informationDataID__aditionally_video}
-        src={videoModel}
-      />
-    </div>
-    <div
-      onClick={() => setShowModelVideo(false)}
-      className={styles.showModelImg__cross}
-    >
-      <img src={Cross} alt="" />
-    </div>
-  </div>
-)}
     </div>
   );
 }

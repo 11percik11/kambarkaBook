@@ -77,7 +77,7 @@ export default function ContainerDate() {
     title: string,
     date: string
   ) => {
-    console.log(index);
+    // console.log(index);
     
     setActiveId(index);
     dispatch(setVideo({ video, title, date }));

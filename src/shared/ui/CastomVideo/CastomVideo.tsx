@@ -20,7 +20,8 @@ type CastomVideoProps = {
   title?: string; // 🔥 передаём заголовок
   className?: string;
   IconVideo?: boolean;
-  clickIcon?: () => void;
+  clickIcon?: boolean;
+  setFunVideoTriger?: (item: boolean) => void;
 };
 
 export default function CastomVideo({
@@ -29,7 +30,8 @@ export default function CastomVideo({
   title,
   className,
   IconVideo = false,
-  clickIcon,
+  clickIcon = false,
+  setFunVideoTriger,
 }: CastomVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,6 +45,12 @@ export default function CastomVideo({
   const dispatch = useDispatch();
   const [showControls, setShowControls] = useState(true);
   const controlsTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (clickIcon) {
+      toggleFullscreen();
+    }
+  }, [clickIcon]);
 
   const showControlsTemporarily = () => {
     setShowControls(true);
@@ -89,15 +97,11 @@ export default function CastomVideo({
     if (document.fullscreenElement) {
       document.exitFullscreen();
       dispatch(modelActive({ active: true }));
+      setFunVideoTriger?.(false);
     } else {
       container.requestFullscreen();
       dispatch(modelActive({ active: false }));
     }
-  };
-
-  const exitFullscreen = () => {
-    document.exitFullscreen();
-    dispatch(modelActive({ active: true }));
   };
 
   useEffect(() => {
@@ -189,7 +193,7 @@ export default function CastomVideo({
     setCurrentTime(newTime);
     showControlsTemporarily();
 
-    console.log(isEnded);
+    // console.log(isEnded);
     if (isEnded) {
       // video.play();
       // setIsPlaying(true);
@@ -243,9 +247,8 @@ export default function CastomVideo({
             showControls ? styles.visible : styles.hidden
           }`}
         >
-          {/* <span className={styles.castomVideo__title}>{title}</span> */}
           <SmartText className={styles.castomVideo__title} tag="span">{title}</SmartText>
-          <button onClick={exitFullscreen} className={styles.closeBtn}>
+          <button onClick={toggleFullscreen} className={styles.closeBtn}>
             <img src={CrossVideo} alt="" />
           </button>
         </div>

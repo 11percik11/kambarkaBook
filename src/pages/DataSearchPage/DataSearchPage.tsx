@@ -20,6 +20,7 @@ import memorialPng from "../../shared/assets/foto/fon/memorial.png";
 import siriaPng from "../../shared/assets/foto/fon/siria bg.png";
 import { useAllMemorialQuery } from "../../entities/Memorial/api/MemorialApi";
 import { setMemorial } from "../../entities/Memorial/api/MemorialSlice";
+import Loader from "../../shared/ui/Loader/Loader";
 
 export default function DataSearch() {
   const dispatch = useDispatch();
@@ -28,9 +29,8 @@ export default function DataSearch() {
   const dataAct = useSelector((state: RootState) => state.hero.items);
   const location = useLocation();
   const NumberSectionId = location.state.sectionId;
-  
 
-  const { data } = useGetPeopleQuery({
+  const { data, isLoading } = useGetPeopleQuery({
     sectionId: NumberSectionId,
     name: "",
   });
@@ -38,7 +38,6 @@ export default function DataSearch() {
   const { data: dataMemorial } = useAllMemorialQuery({
     sectionId: NumberSectionId,
   });
-
 
   const backgroundImages = [
     DatePng,
@@ -58,7 +57,8 @@ export default function DataSearch() {
     "Специальная Военная Операция",
     "Памятники Камбарского района",
     "Камбарский район в годы ВОВ",
-    "Участники иных событий"];
+    "Участники иных событий",
+  ];
 
   const [triggerGetPeople] = useLazyGetPeopleQuery();
   const HandleClickInput = () => {
@@ -86,7 +86,13 @@ export default function DataSearch() {
       dispatch(setMemorial(dataMemorial));
     }
   }, [dataMemorial]);
-  
+
+  if (isLoading)
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
 
   return (
     <div
@@ -99,7 +105,9 @@ export default function DataSearch() {
     >
       <HeaderSearch
         funClearData={() => dispatch(clearHeroes())}
-        variantHeader={NumberSectionId == 7 || NumberSectionId == 8  ? "link" : "search"}
+        variantHeader={
+          NumberSectionId == 7 || NumberSectionId == 8 ? "link" : "search"
+        }
         setVisable={setVisableKeyboard}
         inputRef={inputRef}
       >
