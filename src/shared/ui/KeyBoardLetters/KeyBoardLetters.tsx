@@ -13,6 +13,7 @@ interface KeyBoardLettersProps {
   className?: string;
   keyBoardNumber?: boolean;
   maxValue?: number;
+  currentPage?: number
 }
 
 type ShiftMode = "off" | "once" | "lock";
@@ -25,6 +26,7 @@ export default function KeyBoardLetters({
   className = "",
   keyBoardNumber = false,
   maxValue,
+  currentPage,
 }: KeyBoardLettersProps) {
   const [internalValue, setInternalValue] = useState("");
   const [shiftMode, setShiftMode] = useState<ShiftMode>("off");
@@ -39,16 +41,16 @@ export default function KeyBoardLetters({
 
   useEffect(() => {
     if (keyBoardNumber) {
-      const initial = maxValue && maxValue > 2 ? "2" : "1";
-      setInternalValue(initial);
+      // const initial = maxValue && maxValue > 2 ? "2" : "1";
+      setInternalValue(`${currentPage}`);
 
       // Уведомить родителя
-      onInputChange?.(initial);
+      onInputChange?.(`${currentPage}`);
 
       // Обновить значение в input вручную
       const targetInput = inputRef?.current || internalInputRef.current;
       if (targetInput) {
-        targetInput.value = initial;
+        targetInput.value = `${currentPage}`;
       }
     }
   }, [maxValue, keyBoardNumber]);
@@ -155,6 +157,7 @@ export default function KeyBoardLetters({
   const numericValue = parseInt(internalValue) || 1;
   const isAtMin = numericValue <= 1;
   const isAtMax = maxValue !== undefined && numericValue >= maxValue;
+
   return (
     <div className={`${styles.keyBoardLetters} ${className}`} onClick={onVisable}>
       {!inputRef && (

@@ -4,6 +4,7 @@ import * as pdfjsLib from "pdfjs-dist";
 import VectorLeft from "../../../../shared/assets/svg/VectorLeft.svg";
 import VectorRight from "../../../../shared/assets/svg/VectorRight.svg";
 import KeyBoardLetters from "../../../../shared/ui/KeyBoardLetters/KeyBoardLetters";
+import Loader from "../../../../shared/ui/Loader/Loader";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
@@ -19,16 +20,17 @@ export default function PdfViewer({ url }: PdfViewerProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(0);
   const [showKeyBoard, setShowKeyBoard] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const loadPdf = async () => {
       try {
+        setLoading(true);
         setError(null);
         setCurrentPage(1);
 
         const response = await fetch(url);
         if (!response.ok) throw new Error("Ошибка загрузки PDF");
-
         const blob = await response.blob();
         const blobUrl = URL.createObjectURL(blob);
 
@@ -41,6 +43,8 @@ export default function PdfViewer({ url }: PdfViewerProps) {
       } catch (err) {
         console.error("Ошибка загрузки PDF:", err);
         setError("Не удалось загрузить PDF.");
+      } finally {
+        setLoading(false); // Завершение загрузки
       }
     };
 
@@ -85,6 +89,14 @@ export default function PdfViewer({ url }: PdfViewerProps) {
     setCurrentPage((prev) => Math.min(prev + 2, numPages));
 
   if (error) return <div style={{ color: "red" }}>{error}</div>;
+
+  if (loading) {
+    return (
+      <div className={styles.loaderWrapper}>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.pdfViewer}>
@@ -148,6 +160,7 @@ export default function PdfViewer({ url }: PdfViewerProps) {
           <KeyBoardLetters
             onVisable={() => setShowKeyBoard(false)}
             keyBoardNumber
+            currentPage={currentPage}
             maxValue={numPages}
             onInputChange={(val) => {
               const page = Number(val);

@@ -42,7 +42,7 @@ export default function MemorialIDPage() {
                 })`,
               }}>
       <HeaderSearch variantHeader="none" >{TitlePage[NumberSectionId - 1]}</HeaderSearch>
-       <MemoryDataID/>       
+      <MemoryDataID/>       
     </div>
   )
 }
