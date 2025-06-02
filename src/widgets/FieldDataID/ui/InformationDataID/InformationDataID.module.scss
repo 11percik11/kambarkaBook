@@ -10,6 +10,7 @@
     gap: 48px;
 
     &_button {
+      letter-spacing: 2px;
       font-size: 48px;
       font-weight: 600;
       color: #ab7979;
@@ -51,12 +52,14 @@
 
   &__hr {
     border: 1px solid #4b0e0e;
+    margin: 0;
   }
 
   &__field {
     display: flex;
+    align-items: center;
     min-height: 107px;
-    padding: 24px 0;
+    // padding: 24px 0;
 
     &_titel {
       font-size: 48px;
@@ -80,11 +83,12 @@
   }
 
   &_awardsBox {
-    margin-top: 80px;
+    margin-top: 47px;
 
     &_title {
       font-size: 48px;
       font-weight: 700;
+      margin-bottom: 30px;
     }
   }
 
@@ -95,6 +99,9 @@
 
     &_medal {
       width: 50%;
+
+      max-width: 48%;
+
       height: 200px;
       display: flex;
       align-items: center;
@@ -102,7 +109,7 @@
     }
 
     &_BoximgMedal {
-      width: 200px;
+      min-width: 200px;
       height: 200px;
     }
 

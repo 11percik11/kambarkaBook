@@ -14,7 +14,9 @@ export default function DatePage() {
       </HeaderSearch>
       <div className={styles.datePage__container}>
         <ContainerDate />
-        <FieldVideoDate />
+        <div>
+          <FieldVideoDate />
+        </div>
       </div>
     </div>
   );

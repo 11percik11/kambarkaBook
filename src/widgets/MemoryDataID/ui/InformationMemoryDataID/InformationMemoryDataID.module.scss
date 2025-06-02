@@ -29,31 +29,42 @@
 
   &__hr {
     border: 1px solid #4b0e0e;
+    margin: 0;
+  }
+
+  &__hrMargin {
+    margin-bottom: 42px;
   }
 
   &__field {
     display: flex;
+    align-items: center;
     min-height: 107px;
-    padding: 24px 0;
+    // padding: 24px 0;
 
     &_titel {
       font-size: 48px;
       font-weight: 700;
+      margin-bottom: 10px;
       min-width: 900px;
       color: #4b0e0e;
     }
 
     &_textInformation {
-      letter-spacing: 2px;
-      line-height: 1.15;
       font-size: 48px;
       font-weight: 400;
+      letter-spacing: 3px;
+      line-height: 1.1;
     }
+  }
+
+  &__fieldTitle {
+    margin-bottom: 50px;
   }
 
   &__fieldColumns {
     display: flex;
     flex-direction: column;
-    margin-bottom: 48px;
+    margin-bottom: 36px;
   }
 }

@@ -11,7 +11,7 @@ export default function InformationMemoryDataID({data}:InformationMemoryDataIDPr
     <div className={styles.informationDataID}>
         <div className={styles.InformationMemoryDataID__containerInfromation}>
             {data?.title && (
-              <div className={styles.InformationMemoryDataID__field}>
+              <div className={`${styles.InformationMemoryDataID__field} ${styles.InformationMemoryDataID__fieldTitle}`}>
                 <div className={styles.InformationMemoryDataID__field_titel}>
                   Наименование
                 </div>
@@ -67,16 +67,19 @@ export default function InformationMemoryDataID({data}:InformationMemoryDataIDPr
                 </div>
               </>
             )}
+
+            <div>
+
+              <hr className={`${styles.InformationMemoryDataID__hr} ${styles.InformationMemoryDataID__hrMargin}`} />
             {data?.description && (
               <>
-                <hr className={styles.InformationMemoryDataID__hr} />
                 <div className={`${styles.InformationMemoryDataID__fieldColumns} ${styles.InformationMemoryDataID__fieldColumns_margin}`}>
                   <div className={styles.InformationMemoryDataID__field_titel}>
                     Описание
                   </div>
                   <p
                     className={styles.InformationMemoryDataID__field_textInformation}
-                  >
+                    >
                     <SmartText>{data?.description}</SmartText>
                   </p>
                 </div>
@@ -90,12 +93,13 @@ export default function InformationMemoryDataID({data}:InformationMemoryDataIDPr
                   </div>
                   <p
                     className={styles.InformationMemoryDataID__field_textInformation}
-                  >
+                    >
                     <SmartText>{data?.history}</SmartText>
                   </p>
                 </div>
               </>
             )}
+            </div>
           </div>
     </div>
   )
