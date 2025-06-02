@@ -1,14 +1,15 @@
 import styles from './MemorialIDPage.module.scss';
 import { useLocation } from "react-router-dom";
 import HeaderSearch from "../../widgets/HeaderSearch/HeaderSearch";
-import svoPng from "../../shared/assets/foto/fon/svo.png";
-import chechnyaPng from "../../shared/assets/foto/fon/chechnya2.png";
-import vovPng from "../../shared/assets/foto/fon/vov.png";
-import bgAfganPng from "../../shared/assets/foto/fon/bgAfgan.png";
-import DatePng from "../../shared/assets/foto/fon/date.png";
-import memorialPng from "../../shared/assets/foto/fon/memorial.png";
-import siriaPng from "../../shared/assets/foto/fon/siria bg.png";
 import MemoryDataID from '../../widgets/MemoryDataID/MemoryDataID';
+
+import svoPng from "../../shared/assets/foto/jpg/svo.jpg";
+import chechnyaPng from "../../shared/assets/foto/jpg/chechnya2.jpg";
+import vovPng from "../../shared/assets/foto/jpg/vov.jpg";
+import bgAfganPng from "../../shared/assets/foto/jpg/bgAfgan.jpg";
+import DatePng from "../../shared/assets/foto/jpg/date.jpg";
+import memorialPng from "../../shared/assets/foto/jpg/memorial.jpg";
+import siriaPng from "../../shared/assets/foto/jpg/siria bg.jpg";
 
 export default function MemorialIDPage() {
   const location = useLocation();

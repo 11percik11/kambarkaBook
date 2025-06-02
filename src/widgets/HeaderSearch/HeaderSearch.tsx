@@ -55,6 +55,12 @@ export default function HeaderSearch({
     }
   };
 
+  const lupaClick = () => {
+    if (inputRef?.current) {
+      inputRef.current.focus();
+    }
+  }
+
   return (
     <div className={styles.headerSearch}>
       <ButtonNavigate
@@ -79,6 +85,7 @@ export default function HeaderSearch({
             className={styles.headerSearch__img}
             src={magnifier_Svg}
             alt="magnifier_Svg"
+            onClick={lupaClick}
           />
           <input
             onFocus={() => setIsFocused(true)}

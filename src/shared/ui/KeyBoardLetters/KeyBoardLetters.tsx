@@ -53,6 +53,12 @@ export default function KeyBoardLetters({
     }
   }, [maxValue, keyBoardNumber]);
 
+  const handleBox = () => {
+    const targetInput = inputRef?.current || internalInputRef.current;
+      if (!targetInput) return;
+      targetInput.focus();
+  }
+
   const handleKeyPress = useCallback(
     (key: string) => {
       const targetInput = inputRef?.current || internalInputRef.current;
@@ -78,6 +84,7 @@ export default function KeyBoardLetters({
           break;
 
         case "Пробел":
+          if (newValue == "") break;
           newValue = newValue.slice(0, startPos) + " " + newValue.slice(endPos);
           newCursorPos = startPos + 1;
           break;
@@ -96,6 +103,9 @@ export default function KeyBoardLetters({
 
         default:
           const char = shiftMode !== "off" ? key.toUpperCase() : key;
+          if (shiftMode == "once"){
+            setShiftMode("off");
+          }
           newValue =
             newValue.slice(0, startPos) + char + newValue.slice(endPos);
           newCursorPos = startPos + char.length;
@@ -218,7 +228,8 @@ export default function KeyBoardLetters({
       )}
 
       <div
-        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.preventDefault()}
+        onClick={(e) => {e.stopPropagation(); handleBox()}}
         className={`${styles.keyBoardLetters__container} ${styles.keyBoardLetters__containerNumber}`}
       >
         {!keyBoardNumber ? (
