@@ -23,31 +23,61 @@ export default function AvatarkaDataID({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const startX = useRef<number | null>(null);
-  const swipeThreshold = 50; // Минимальное расстояние свайпа
+  const isDragging = useRef(false);
+  const swipeThreshold = 50;
 
   const hasMultipleImages = (urlImgAvatarka?.length || 0) > 1;
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    startX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (startX.current === null) return;
-    const endX = e.changedTouches[0].clientX;
+  // Общая функция для обработки конца свайпа/драг
+  const handleSwipeEnd = (endX: number | null) => {
+    if (startX.current === null || endX === null) return;
     const diff = startX.current - endX;
 
     if (diff > swipeThreshold) {
-      // Свайп влево — следующая картинка
+      // свайп влево
       if (currentImageIndex < (urlImgAvatarka?.length || 0) - 1) {
         setCurrentImageIndex(currentImageIndex + 1);
       }
     } else if (diff < -swipeThreshold) {
-      // Свайп вправо — предыдущая картинка
+      // свайп вправо
       if (currentImageIndex > 0) {
         setCurrentImageIndex(currentImageIndex - 1);
       }
     }
     startX.current = null;
+    isDragging.current = false;
+  };
+
+  // Touch handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!hasMultipleImages) return;
+    startX.current = e.touches[0].clientX;
+    isDragging.current = true;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!isDragging.current) return;
+    const endX = e.changedTouches[0].clientX;
+    handleSwipeEnd(endX);
+  };
+
+  // Mouse handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!hasMultipleImages) return;
+    startX.current = e.clientX;
+    isDragging.current = true;
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (!isDragging.current) return;
+    handleSwipeEnd(e.clientX);
+  };
+
+  // Чтобы не листать при случайном движении мыши без зажатия
+  const handleMouseLeave = (e: React.MouseEvent) => {
+    if (isDragging.current) {
+      handleSwipeEnd(e.clientX);
+    }
   };
 
   return (
@@ -56,6 +86,10 @@ export default function AvatarkaDataID({
         className={styles.avatarkaDataID__boxImg}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        style={{ cursor: hasMultipleImages ? "grab" : "default" }}
       >
         {urlImgAvatarka?.length && (
           <div
@@ -74,7 +108,7 @@ export default function AvatarkaDataID({
               ? `https://api-kambarka-memory-book.itlabs.top${urlImgAvatarka[currentImageIndex]?.image}`
               : none_heroImg
           }
-          draggable="false"
+          draggable={false}
           className={styles.avatarkaDataID__image}
           alt=""
         />
@@ -90,10 +124,10 @@ export default function AvatarkaDataID({
           </div>
         )}
         {urlImgAvatarka?.length &&
-          currentImageIndex != urlImgAvatarka.length - 1 && (
+          currentImageIndex !== urlImgAvatarka.length - 1 && (
             <div
               onClick={() =>
-                currentImageIndex != urlImgAvatarka.length - 1 &&
+                currentImageIndex !== urlImgAvatarka.length - 1 &&
                 setCurrentImageIndex(currentImageIndex + 1)
               }
               className={styles.avatarkaDataID__boxImg_arrowRirht}
