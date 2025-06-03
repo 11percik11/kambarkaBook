@@ -1,5 +1,5 @@
 import styles from "./AvatarkaDataID.module.scss";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import arrow_img_left_Svg from "../../../../shared/assets/svg/arrow_img_left_Svg.svg";
 import arrow_img_right_Svg from "../../../../shared/assets/svg/arrow_img_right_Svg.svg";
 import none_heroImg from "../../../../shared/assets/foto/none_heroImg.png";
@@ -21,12 +21,42 @@ export default function AvatarkaDataID({
   patronymic,
 }: AvatarkaDataIDProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
+
+  const startX = useRef<number | null>(null);
+  const swipeThreshold = 50; // Минимальное расстояние свайпа
+
   const hasMultipleImages = (urlImgAvatarka?.length || 0) > 1;
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    startX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (startX.current === null) return;
+    const endX = e.changedTouches[0].clientX;
+    const diff = startX.current - endX;
+
+    if (diff > swipeThreshold) {
+      // Свайп влево — следующая картинка
+      if (currentImageIndex < (urlImgAvatarka?.length || 0) - 1) {
+        setCurrentImageIndex(currentImageIndex + 1);
+      }
+    } else if (diff < -swipeThreshold) {
+      // Свайп вправо — предыдущая картинка
+      if (currentImageIndex > 0) {
+        setCurrentImageIndex(currentImageIndex - 1);
+      }
+    }
+    startX.current = null;
+  };
 
   return (
     <div className={`${styles.avatarkaDataID} ${className}`}>
-      <div className={styles.avatarkaDataID__boxImg}>
+      <div
+        className={styles.avatarkaDataID__boxImg}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         {urlImgAvatarka?.length && (
           <div
             className={styles.avatarkaDataID__photoBlurBackground}
