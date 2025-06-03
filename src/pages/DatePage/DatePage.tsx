@@ -6,7 +6,7 @@ import FieldVideoDate from "./ui/FieldVideoDate/FieldVideoDate";
 import { clearDate } from "../../entities/Date/api/DateSlice";
 
 export default function DatePage() {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   return (
     <div className={styles.datePage}>
       <HeaderSearch variantHeader="none" funClearData={() => dispatch(clearDate())}>

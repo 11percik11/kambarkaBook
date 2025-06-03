@@ -105,10 +105,12 @@ export default function DataSearch() {
       }}
     >
       <HeaderSearch
+        onClick={() => localStorage.removeItem("searchInput")}
         funClearData={() => dispatch(clearHeroes())}
         variantHeader={
           NumberSectionId == 7 || NumberSectionId == 8 ? "link" : "search"
         }
+        clickInput={HandleClickInput}
         setVisable={setVisableKeyboard}
         inputRef={inputRef}
       >

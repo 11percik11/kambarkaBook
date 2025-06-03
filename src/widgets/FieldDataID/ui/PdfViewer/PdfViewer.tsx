@@ -126,7 +126,7 @@ export default function PdfViewer({ url }: PdfViewerProps) {
           {!showKeyBoard && (
             <>
               <button
-                className={styles.pdfViewer__buttonPagination}
+                className={`${styles.pdfViewer__buttonPagination} ${currentPage < 2 && styles.pdfViewer__buttonPaginationNone}`}
                 onClick={handlePrev}
                 disabled={currentPage <= 1}
               >
@@ -144,7 +144,7 @@ export default function PdfViewer({ url }: PdfViewerProps) {
                 </span>
               </div>
               <button
-                className={styles.pdfViewer__buttonPagination}
+                className={`${styles.pdfViewer__buttonPagination} ${currentPage >= numPages - 1 && styles.pdfViewer__buttonPaginationNone}`}
                 onClick={handleNext}
                 disabled={currentPage + 1 > numPages}
               >

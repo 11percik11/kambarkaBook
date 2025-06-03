@@ -13,7 +13,7 @@ interface KeyBoardLettersProps {
   className?: string;
   keyBoardNumber?: boolean;
   maxValue?: number;
-  currentPage?: number
+  currentPage?: number;
 }
 
 type ShiftMode = "off" | "once" | "lock";
@@ -28,6 +28,7 @@ export default function KeyBoardLetters({
   maxValue,
   currentPage,
 }: KeyBoardLettersProps) {
+  
   const [internalValue, setInternalValue] = useState("");
   const [shiftMode, setShiftMode] = useState<ShiftMode>("off");
   const internalInputRef = useRef<HTMLInputElement>(null);
@@ -45,7 +46,7 @@ export default function KeyBoardLetters({
       setInternalValue(`${currentPage}`);
 
       // Уведомить родителя
-      onInputChange?.(`${currentPage}`);
+      // onInputChange?.(`${currentPage}`);
 
       // Обновить значение в input вручную
       const targetInput = inputRef?.current || internalInputRef.current;
@@ -57,9 +58,9 @@ export default function KeyBoardLetters({
 
   const handleBox = () => {
     const targetInput = inputRef?.current || internalInputRef.current;
-      if (!targetInput) return;
-      targetInput.focus();
-  }
+    if (!targetInput) return;
+    targetInput.focus();
+  };
 
   const handleKeyPress = useCallback(
     (key: string) => {
@@ -92,6 +93,7 @@ export default function KeyBoardLetters({
           break;
 
         case "Ввод":
+          onInputChange?.(newValue);
           clickInput?.();
           break;
 
@@ -105,7 +107,7 @@ export default function KeyBoardLetters({
 
         default:
           const char = shiftMode !== "off" ? key.toUpperCase() : key;
-          if (shiftMode == "once"){
+          if (shiftMode == "once") {
             setShiftMode("off");
           }
           newValue =
@@ -114,6 +116,12 @@ export default function KeyBoardLetters({
 
           // Если это цифровая клавиатура, ограничим по maxValue
           if (keyBoardNumber) {
+            // Если строка из одних нулей — заменяем на "1"
+            if (/^0+$/.test(newValue)) {
+              newValue = "1";
+              newCursorPos = 1;
+            }
+
             const numericVal = parseInt(newValue) || 1;
             if (numericVal > (maxValue || Infinity)) {
               newValue = String(maxValue);
@@ -124,6 +132,7 @@ export default function KeyBoardLetters({
 
       targetInput.value = newValue;
       setInternalValue(newValue);
+      localStorage.setItem("keyValue", newValue)
 
       const event = new Event("input", { bubbles: true });
       targetInput.dispatchEvent(event);
@@ -132,7 +141,7 @@ export default function KeyBoardLetters({
         targetInput.setSelectionRange(newCursorPos, newCursorPos);
       }, 0);
 
-      onInputChange?.(newValue);
+      // onInputChange?.(newValue);
     },
     [shiftMode, inputRef, onInputChange]
   );
@@ -153,15 +162,28 @@ export default function KeyBoardLetters({
       targetInput.removeEventListener("keyup", updateCursor);
     };
   }, [updateCursor, inputRef]);
+  
+  // useEffect(() => {
+  //   console.log(inputRef);
+  //   console.log('sdfsdf');
+  //   console.log(internalValue.length);
+  // }, [shiftMode, inputRef, inputRef?.current ,onInputChange, internalValue.length, updateCursor, internalInputRef.current])
+
 
   const numericValue = parseInt(internalValue) || 1;
   const isAtMin = numericValue <= 1;
   const isAtMax = maxValue !== undefined && numericValue >= maxValue;
 
   return (
-    <div className={`${styles.keyBoardLetters} ${className}`} onClick={onVisable}>
+    <div
+      className={`${styles.keyBoardLetters} ${className}`}
+      onClick={onVisable}
+    >
       {!inputRef && (
-        <div className={styles.keyBoardLetters__boxInput} onClick={(e) => e.stopPropagation()}>
+        <div
+          className={styles.keyBoardLetters__boxInput}
+          onClick={(e) => e.stopPropagation()}
+        >
           <button
             className={`${styles.keyBoardLetters__buttonPagination} ${
               isAtMin && styles.keyBoardLetters__buttonPaginationVisible
@@ -177,7 +199,7 @@ export default function KeyBoardLetters({
               if (updated !== current) {
                 targetInput.value = String(updated);
                 setInternalValue(String(updated));
-                onInputChange?.(String(updated));
+                // onInputChange?.(String(updated));
 
                 const event = new Event("input", { bubbles: true });
                 targetInput.dispatchEvent(event);
@@ -197,7 +219,7 @@ export default function KeyBoardLetters({
 
               const strVal = String(val);
               setInternalValue(strVal);
-              onInputChange?.(strVal);
+              // onInputChange?.(strVal);
             }}
             onClick={updateCursor}
             onKeyUp={updateCursor}
@@ -218,7 +240,7 @@ export default function KeyBoardLetters({
               if (updated !== current) {
                 targetInput.value = String(updated);
                 setInternalValue(String(updated));
-                onInputChange?.(String(updated));
+                // onInputChange?.(String(updated));
 
                 const event = new Event("input", { bubbles: true });
                 targetInput.dispatchEvent(event);
@@ -232,8 +254,11 @@ export default function KeyBoardLetters({
 
       <div
         onMouseDown={(e) => e.preventDefault()}
-        onClick={(e) => {e.stopPropagation(); handleBox()}}
-        className={`${styles.keyBoardLetters__container} ${styles.keyBoardLetters__containerNumber}`}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleBox();
+        }}
+        className={`${styles.keyBoardLetters__container} ${keyBoardNumber && styles.keyBoardLetters__containerNumber}`}
       >
         {!keyBoardNumber ? (
           <>

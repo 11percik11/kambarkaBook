@@ -78,19 +78,21 @@ export default function MainPage() {
               </p>
             </div>
             <button className={styles.mainPage__container_boxField_button}>
-              <a className={styles.mainPage__container_boxField_buttonLink} href="https://www.gosuslugi.ru">Перейти</a>
-              {/* Перейти */}
+              <a className={styles.mainPage__container_boxField_buttonLink} href="https://pamyat-naroda.ru/">Перейти</a>
               <img src={link_Svg} alt="" />
             </button>
           </div>
+
+
+
           <div className={styles.mainPage__container_boxField_decoration}>
             {data?.length &&
               data.map((item, index) => (
                 <CardField
-                  key={index}
-                  onClick={() => HandleClickInput(item.id)}
-                  className={styles.mainPage__container_boxField_cardField}
-                  imgUrl={`https://api-kambarka-memory-book.itlabs.top${item.image}`}
+                key={index}
+                onClick={() => HandleClickInput(item.id)}
+                className={styles.mainPage__container_boxField_cardField}
+                imgUrl={`https://api-kambarka-memory-book.itlabs.top${item.image}`}
                 >
                   {item.title}
                 </CardField>

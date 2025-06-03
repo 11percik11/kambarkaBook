@@ -12,6 +12,9 @@ interface HeaderSearchProps {
   setVisable?: (value: boolean) => void;
   variantHeader?: "none" | "search" | "link";
   funClearData?: () => void;
+  clickInput?: () => void;
+  storageKey?: string; // New prop for localStorage key
+  onClick?: () => void;
 }
 
 export default function HeaderSearch({
@@ -20,6 +23,9 @@ export default function HeaderSearch({
   setVisable,
   variantHeader = "none",
   funClearData,
+  clickInput,
+  storageKey = "searchInput", // Default key for localStorage
+  onClick,
 }: HeaderSearchProps) {
   const [showClear, setShowClear] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -27,24 +33,44 @@ export default function HeaderSearch({
 
   const handleBackClick = () => {
     navigate(-1);
+    onClick?.();
     if (funClearData) {
       funClearData();
     }
   };
+  // Load saved value from localStorage on component mount
+  useEffect(() => {
+    if (!inputRef?.current || !storageKey) return;
+    
+    const savedValue = localStorage.getItem(storageKey);
+    if (savedValue && inputRef.current) {
+      inputRef.current.value = savedValue;
+      setShowClear(savedValue.length > 0);
+    }
+  }, [inputRef, storageKey]);
 
   useEffect(() => {
-    if (!inputRef?.current) return;
+    if (!inputRef?.current || !storageKey) return;
 
     const handleInputChange = () => {
-      setShowClear(!!inputRef.current?.value);
+      const value = inputRef.current?.value || '';
+      setShowClear(value.length > 0);
+      
+      // Save to localStorage
+      if (value) {
+        localStorage.setItem(storageKey, value);
+      } else {
+        localStorage.removeItem(storageKey);
+      }
     };
+    
     inputRef.current.addEventListener("input", handleInputChange);
     handleInputChange();
 
     return () => {
       inputRef.current?.removeEventListener("input", handleInputChange);
     };
-  }, [inputRef]);
+  }, [inputRef, storageKey]);
 
   const clearInput = () => {
     if (inputRef?.current) {
@@ -52,13 +78,20 @@ export default function HeaderSearch({
       const event = new Event("input", { bubbles: true });
       inputRef.current.dispatchEvent(event);
       inputRef.current.focus();
+      
+      // Clear from localStorage
+      if (storageKey) {
+        localStorage.removeItem(storageKey);
+      }
     }
+
+    clickInput?.();
   };
 
   const lupaClick = () => {
     if (inputRef?.current) {
       inputRef.current.focus();
-    }
+    }    
   }
 
   return (
@@ -76,7 +109,8 @@ export default function HeaderSearch({
       </h3>
       {variantHeader == "search" && (
         <div
-          onClick={() => setVisable?.(true)}
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={() => {setVisable?.(true); lupaClick()}}
           className={`${styles.containerInput} ${
             isFocused ? styles.containerInput__focused : ""
           }`}
@@ -107,7 +141,7 @@ export default function HeaderSearch({
       )}
       {variantHeader == "link" && (
         <button className={styles.headerSearch__link}>
-          <p className={styles.headerSearch__link_text}>Место памяти</p>
+          <a className={styles.headerSearch__link_text} href="https://местопамяти.рф">Место памяти</a>
           <img src={vector_Svg} alt="" />
         </button>
       )}

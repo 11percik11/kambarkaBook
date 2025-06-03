@@ -11,6 +11,7 @@
         gap: 48px;
         height: 160px;
     }
+    
 
     &__Boxpage {
         background: #FFFFFF66;
@@ -38,6 +39,10 @@
         background: #FFFFFF;
         border: none;
         cursor: pointer;
+    }
+
+    &__buttonPaginationNone {
+        opacity: 0.3;
     }
 }
 

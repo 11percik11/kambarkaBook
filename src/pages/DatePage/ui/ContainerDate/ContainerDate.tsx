@@ -32,7 +32,9 @@ export default function ContainerDate() {
           .then((response) => {
             if (response.data) {
               dispatch(addDate(response.data));
-              dispatch(setVideo({ video: response.data.items[0].video, title: response.data.items[0].description, date: response.data.items[0].date}));
+              if (DataDateAll.items.length == 0){
+                dispatch(setVideo({ video: response.data.items[0].video, title: response.data.items[0].description, date: response.data.items[0].date}));
+              }
               setCurrentPage((prev) => prev + 1);
               setActiveId(0);
             }
@@ -43,7 +45,9 @@ export default function ContainerDate() {
           .then((response) => {
             if (response.data) {
               dispatch(addDate(response.data));
-              dispatch(setVideo({ video: response.data.items[0].video, title: response.data.items[0].description, date: response.data.items[0].date}));
+              if (DataDateAll.items.length == 0){
+                dispatch(setVideo({ video: response.data.items[0].video, title: response.data.items[0].description, date: response.data.items[0].date}));
+              }
               setCurrentPage((prev) => prev + 1);
               setActiveId(0);
             }
@@ -56,7 +60,7 @@ export default function ContainerDate() {
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     resetTimer();
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-    const isNearBottom = scrollHeight - (scrollTop + clientHeight) < 1;
+    const isNearBottom = scrollHeight - (scrollTop + clientHeight) < 900;
     if (isNearBottom) {
       setFetching(true);
     }
@@ -77,7 +81,7 @@ export default function ContainerDate() {
     title: string,
     date: string
   ) => {
-    // console.log(index);
+    console.log(index);
     
     setActiveId(index);
     dispatch(setVideo({ video, title, date }));
@@ -95,6 +99,7 @@ export default function ContainerDate() {
       <div className={styles.containerDate__titelBox}>
         <button
           onClick={() => DateOrDay(0)}
+          disabled={numberPage === 0}
           className={`${styles.containerDate__boxButton_button} ${
             numberPage === 0 && styles.containerDate__boxButton_buttonActive
           }`}
@@ -103,6 +108,7 @@ export default function ContainerDate() {
         </button>
         <button
           onClick={() => DateOrDay(1)}
+          disabled={numberPage === 1}
           className={`${styles.containerDate__boxButton_button} ${
             numberPage === 1 && styles.containerDate__boxButton_buttonActive
           }`}

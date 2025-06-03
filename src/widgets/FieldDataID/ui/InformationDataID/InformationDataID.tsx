@@ -75,7 +75,7 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
             Биография
           </button>
         )}
-        {data?.peopleMedia.length && (
+        {data?.peopleMedia.length != 0 && (
           <button
             onClick={() => setNumberPage(2)}
             className={`${styles.informationDataID__boxButton_button} ${

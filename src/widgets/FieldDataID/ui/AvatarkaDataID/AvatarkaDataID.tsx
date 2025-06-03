@@ -44,6 +44,7 @@ export default function AvatarkaDataID({
               ? `https://api-kambarka-memory-book.itlabs.top${urlImgAvatarka[currentImageIndex]?.image}`
               : none_heroImg
           }
+          draggable="false"
           className={styles.avatarkaDataID__image}
           alt=""
         />

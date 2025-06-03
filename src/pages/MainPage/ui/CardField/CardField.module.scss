@@ -1,28 +1,70 @@
 @use "../../../../app/styles/variables.scss" as *;
 
 .cardField {
-  display: flex;
-  // justify-content: center;
-  align-items: center;
+  position: relative;
   width: 884px;
-  height: 302px;
-  background: #9e1515;
-  // border-radius: 350px 50px 300px 350px;
-  border-radius: 418px 150px 420px 436px;
-  border-bottom: 12px solid #e4bf57;
-  border-right: 12px solid #e4bf57;
-  padding-right: 48px;
-  overflow: hidden;
-  cursor: pointer;
+  height: 326px;
+  //   background-color: #ffffff;
+
+  &__boxYellow {
+    position: absolute;
+    top: 24px;
+    right: 0;
+    z-index: 1;
+    width: 721px;
+    height: 302px;
+    background: #e4bf57;
+    // border-radius: 0 15% 25% 0;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 140px;
+  }
+
+  &__boxRed {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 3;
+    width: calc(100% - 163px);
+    height: 302px;
+    background: #9e1515;
+    display: flex;
+    align-items: center;
+    padding-left: 211px;
+    // border-radius: 0 15% 25% 0;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 140px;
+  }
+
+  &__text {
+    letter-spacing: 1px;
+    line-height: 1.1;
+    font-size: 36px;
+    font-weight: 600;
+    color: $text-color-white;
+  }
+
+  &__boxСircleYellow {
+    position: absolute;
+    top: 15px;
+    left: 1px;
+    z-index: 2;
+    width: 326px;
+    height: 326px;
+    background: #e4bf57;
+    border-radius: 50%;
+  }
 
   &__containerImg {
-    max-width: 302px;
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    width: 326px;
+    height: 326px;
     border: 12px solid #ffffff;
     border-radius: 100%;
-    margin-right: 36px;
-    margin-left: -1px;
+    // margin-right: 36px;
+    // margin-left: -1px;
   }
 
   &__img {
@@ -33,12 +75,56 @@
     object-fit: cover;
     object-position: center;
   }
-
-  &__text {
-    letter-spacing: 1px;
-    line-height: 1.1;
-    font-size: 36px;
-    font-weight: 600;
-    color: $text-color-white;
-  }
 }
+
+
+
+
+
+
+
+
+// @use "../../../../app/styles/variables.scss" as *;
+
+// .cardField {
+//   display: flex;
+//   // justify-content: center;
+//   align-items: center;
+//   width: 884px;
+//   height: 302px;
+//   background: #9e1515;
+//   // border-radius: 350px 50px 300px 350px;
+//   border-radius: 418px 150px 420px 436px;
+//   border-bottom: 12px solid #e4bf57;
+//   border-right: 12px solid #e4bf57;
+//   padding-right: 48px;
+//   overflow: hidden;
+//   cursor: pointer;
+
+//   &__containerImg {
+//     max-width: 302px;
+//     width: 100%;
+//     height: 100%;
+//     border: 12px solid #ffffff;
+//     border-radius: 100%;
+//     margin-right: 36px;
+//     margin-left: -1px;
+//   }
+
+//   &__img {
+//     max-width: 302px;
+//     border-radius: 100%;
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+//     object-position: center;
+//   }
+
+//   &__text {
+//     letter-spacing: 1px;
+//     line-height: 1.1;
+//     font-size: 36px;
+//     font-weight: 600;
+//     color: $text-color-white;
+//   }
+// }

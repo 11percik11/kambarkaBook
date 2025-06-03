@@ -7,7 +7,7 @@ export const DateEndpoints = (
     getDate: builder.query<ApiResponse, {page?: number, itemsPerPage?: number} > ({
         query: (params = {}) => {
             let queryPage = 'page=1';
-            let queryItemsPersPage = '&itemsPerPage=12';
+            let queryItemsPersPage = '&itemsPerPage=20';
             
             if (params.page) {
                 queryPage = `page=${params.page}`; // Убрано let
@@ -25,7 +25,7 @@ export const DateEndpoints = (
     getDay: builder.query<ApiResponse, {page?: number, itemsPerPage?: number} > ({
         query: (params = {}) => {
             let queryPage = 'page=1';
-            let queryItemsPersPage = '&itemsPerPage=12';
+            let queryItemsPersPage = '&itemsPerPage=20';
             
             if (params.page) {
                 queryPage = `page=${params.page}`; // Убрано let
