@@ -9,7 +9,7 @@ import dateVideoReducer from "../../entities/Date/api/VideoSlice";
 import modelActiveReducer from "../../entities/Date/api/ModelSlice";
 import { MemorialApi } from "../../entities/Memorial/api/MemorialApi";
 import dateMemorialReducer from "../../entities/Memorial/api/MemorialSlice";
-
+import { WaitApi } from "../../entities/Popup/api/Wait_mod";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +17,7 @@ export const store = configureStore({
     [SectionApi.reducerPath]: SectionApi.reducer,
     [DateApi.reducerPath]: DateApi.reducer,
     [MemorialApi.reducerPath]: MemorialApi.reducer,
+    [WaitApi.reducerPath]: WaitApi.reducer,
     hero: heroDataReducer,
     section: sectionNuberReducer,
     date: dateDataReducer,
@@ -30,6 +31,7 @@ export const store = configureStore({
       .concat(SectionApi.middleware)
       .concat(DateApi.middleware)
       .concat(MemorialApi.middleware)
+      .concat(WaitApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

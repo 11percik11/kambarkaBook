@@ -42,9 +42,7 @@ export default function FiledData() {
     }
   }, []);
 
-  
   useEffect(() => {
-    
     if (NumberSectionId == 7 || NumberSectionId == 8) {
       if (
         fetching &&
@@ -77,12 +75,7 @@ export default function FiledData() {
           if (DataHeroAll.pagination.totalItems - DataHeroAll.items.length < 24) {
             page = DataHeroAll.pagination.totalPages;
           }
-          const keyValue = localStorage.getItem("searchInput") || '';
-          console.log(keyValue);
-          console.log("h");
-          
-          
-          fetchPeople({ sectionId: NumberSectionId, page: page, name: keyValue })
+          fetchPeople({ sectionId: NumberSectionId, page: page })
           .then((response) => {
             if (response.data) {
               dispatch(addHeroes(response.data));
@@ -107,17 +100,8 @@ export default function FiledData() {
     if (isNearBottom) {
       // console.log('rrrrr');
       
-      if (
-          currentPage <= DataHeroAll.pagination.totalPages &&
-          DataHeroAll.items.length != DataHeroAll.pagination.totalItems
-        ){
-          setFetching(true);
-          console.log(fetching);
-        }
-    if (ALL_DATA.items.length == 24) {
-      setCurrentPage(2)
-    }
-      console.log(DataHeroAll.items.length);
+      setFetching(true);
+      console.log(fetching);
       
     }
   };

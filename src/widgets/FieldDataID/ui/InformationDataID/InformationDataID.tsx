@@ -376,7 +376,7 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                         clickIcon={activeVideoUrl === mediaUrl}
                         IconVideo={true}
                         className={styles.informationDataID__aditionally_video}
-                        title={extension}
+                        title={mediaFile.title}
                         src={mediaUrl}
                       />
                     </div>

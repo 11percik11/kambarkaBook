@@ -131,6 +131,7 @@ export default function KeyBoardLetters({
       }
 
       targetInput.value = newValue;
+      // localStorage.setItem("valueSearch", newValue)
       setInternalValue(newValue);
       localStorage.setItem("keyValue", newValue)
 
@@ -147,7 +148,9 @@ export default function KeyBoardLetters({
   );
 
   useEffect(() => {
-    clickInput?.();
+    if (inputRef?.current?.value){
+      clickInput?.();
+    }
   }, [internalValue]);
 
   useEffect(() => {

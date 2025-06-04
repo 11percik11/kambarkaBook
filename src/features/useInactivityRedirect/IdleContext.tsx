@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from "react";
 import { useIdleRedirect } from "./UseInactivityRedirect";
+import { useGetWaitQuery } from "../../entities/Popup/api/Wait_mod";
 
 interface IdleContextProps {
   resetTimer: () => void;
@@ -10,7 +11,8 @@ interface IdleContextProps {
 const IdleContext = createContext<IdleContextProps | null>(null);
 
 export const IdleProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { resetTimer, showModal, modalTimeoutDate } = useIdleRedirect(60 * 1000, 30 * 1000);
+  const {data} = useGetWaitQuery();
+  const { resetTimer, showModal, modalTimeoutDate } = useIdleRedirect((data?.notificationSeconds || 60) * 1000, (data?.sleepModeSeconds || 30) * 1000);
 
   return (
     <IdleContext.Provider value={{ resetTimer, showModal, modalTimeoutDate }}>

@@ -17,6 +17,14 @@ interface HeaderSearchProps {
   onClick?: () => void;
 }
 
+declare global {
+  interface MyGlobalObject {
+    PostMessage: (input: string) => void;
+  }
+
+  var CefSharp: MyGlobalObject;
+}
+
 export default function HeaderSearch({
   children,
   inputRef,
@@ -94,6 +102,17 @@ export default function HeaderSearch({
     }    
   }
 
+
+
+  function toSite(str: string) {
+    let obj = {
+        url: str,
+        home: false, keyboard: false,
+        back: false,
+    }
+    CefSharp.PostMessage(JSON.stringify(obj))
+}
+
   return (
     <div className={styles.headerSearch}>
       <ButtonNavigate
@@ -141,7 +160,7 @@ export default function HeaderSearch({
       )}
       {variantHeader == "link" && (
         <button className={styles.headerSearch__link}>
-          <a className={styles.headerSearch__link_text} href="https://местопамяти.рф">Место памяти</a>
+          <a className={styles.headerSearch__link_text} onClick={() => toSite('https://местопамяти.рф')}>Место памяти</a>
           <img src={vector_Svg} alt="" />
         </button>
       )}

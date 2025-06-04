@@ -63,6 +63,10 @@ export default function DataSearch() {
 
   const [triggerGetPeople] = useLazyGetPeopleQuery();
   const HandleClickInput = () => {
+    // if (true) {
+    //   return
+    // }
+    localStorage.removeItem("scrollTop");
     triggerGetPeople({
       sectionId: NumberSectionId,
       name: inputRef.current?.value,

@@ -1,7 +1,7 @@
 import { MemorialImages } from "../../../../entities/Memorial/model/types";
 import styles from "./AvatarkaMemoryId.module.scss";
 import none_heroImg from "../../../../shared/assets/foto/none_heroImg.png";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import arrow_img_left_Svg from "../../../../shared/assets/svg/arrow_img_left_Svg.svg";
 import arrow_img_right_Svg from "../../../../shared/assets/svg/arrow_img_right_Svg.svg";
 
@@ -16,12 +16,77 @@ export default function AvatarkaMemoryId({
   urlImgAvatarka,
   title,
 }: AvatarkaMemoryIdProps) {
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-      
-      const hasMultipleImages = (urlImgAvatarka?.length || 0) > 1;
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const startX = useRef<number | null>(null);
+  const isDragging = useRef(false);
+  const swipeThreshold = 50;
+
+  const hasMultipleImages = (urlImgAvatarka?.length || 0) > 1;
+
+  // Общая функция для обработки конца свайпа/драг
+  const handleSwipeEnd = (endX: number | null) => {
+    if (startX.current === null || endX === null) return;
+    const diff = startX.current - endX;
+
+    if (diff > swipeThreshold) {
+      // свайп влево
+      if (currentImageIndex < (urlImgAvatarka?.length || 0) - 1) {
+        setCurrentImageIndex(currentImageIndex + 1);
+      }
+    } else if (diff < -swipeThreshold) {
+      // свайп вправо
+      if (currentImageIndex > 0) {
+        setCurrentImageIndex(currentImageIndex - 1);
+      }
+    }
+    startX.current = null;
+    isDragging.current = false;
+  };
+
+  // Touch handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!hasMultipleImages) return;
+    startX.current = e.touches[0].clientX;
+    isDragging.current = true;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!isDragging.current) return;
+    const endX = e.changedTouches[0].clientX;
+    handleSwipeEnd(endX);
+  };
+
+  // Mouse handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!hasMultipleImages) return;
+    startX.current = e.clientX;
+    isDragging.current = true;
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (!isDragging.current) return;
+    handleSwipeEnd(e.clientX);
+  };
+
+  // Чтобы не листать при случайном движении мыши без зажатия
+  const handleMouseLeave = (e: React.MouseEvent) => {
+    if (isDragging.current) {
+      handleSwipeEnd(e.clientX);
+    }
+  };
+
   return (
     <div className={`${styles.avatarkaDataID} ${className}`}>
-      <div className={styles.avatarkaDataID__boxImg}>
+      <div
+        className={styles.avatarkaDataID__boxImg}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        style={{ cursor: hasMultipleImages ? "grab" : "default" }}
+      >
         {urlImgAvatarka?.length && (
           <div
             className={styles.avatarkaDataID__photoBlurBackground}
@@ -39,6 +104,7 @@ export default function AvatarkaMemoryId({
               ? `https://api-kambarka-memory-book.itlabs.top${urlImgAvatarka[currentImageIndex]?.image}`
               : none_heroImg
           }
+          draggable={false}
           className={styles.avatarkaDataID__image}
           alt=""
         />
@@ -54,13 +120,13 @@ export default function AvatarkaMemoryId({
           </div>
         )}
         {urlImgAvatarka?.length &&
-          currentImageIndex != urlImgAvatarka.length - 1 && (
+          currentImageIndex !== urlImgAvatarka.length - 1 && (
             <div
               onClick={() =>
-                currentImageIndex != urlImgAvatarka.length - 1 &&
+                currentImageIndex !== urlImgAvatarka.length - 1 &&
                 setCurrentImageIndex(currentImageIndex + 1)
               }
-              className={styles.avatarkaDataID__boxImg_arrowRirht}
+              className={styles.avatarkaDataID__boxImg_arrowRight}
             >
               <img src={arrow_img_right_Svg} alt="" />
             </div>

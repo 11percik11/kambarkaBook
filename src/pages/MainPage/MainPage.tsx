@@ -49,6 +49,15 @@ export default function MainPage() {
     }
   };
 
+    function toSite(str: string) {
+    let obj = {
+        url: str,
+        home: false, keyboard: false,
+        back: false,
+    }
+    CefSharp.PostMessage(JSON.stringify(obj))
+  }
+
   if (isLoading)
     return (
       <div>
@@ -78,7 +87,7 @@ export default function MainPage() {
               </p>
             </div>
             <button className={styles.mainPage__container_boxField_button}>
-              <a className={styles.mainPage__container_boxField_buttonLink} href="https://pamyat-naroda.ru/">Перейти</a>
+              <a className={styles.mainPage__container_boxField_buttonLink} onClick={() => toSite("https://pamyat-naroda.ru/")}>Перейти</a>
               <img src={link_Svg} alt="" />
             </button>
           </div>
