@@ -42,9 +42,7 @@ export default function FiledData() {
     }
   }, []);
 
-  
   useEffect(() => {
-    
     if (NumberSectionId == 7 || NumberSectionId == 8) {
       if (
         fetching &&
@@ -52,10 +50,7 @@ export default function FiledData() {
         DataMemorialAll.items.length != DataMemorialAll.pagination.totalItems
       ) {
         let page = currentPage;
-        if (
-          DataMemorialAll.pagination.totalItems - DataMemorialAll.items.length <
-          24
-        ) {
+        if (DataMemorialAll.pagination.totalItems - DataMemorialAll.items.length <24){
           page = DataMemorialAll.pagination.totalPages;
         }
         fetchMemorial({ sectionId: NumberSectionId, page: page })
@@ -66,23 +61,19 @@ export default function FiledData() {
             }
           })
           .finally(() => setFetching(false));
+      }
+    } else {
+      if (fetching &&
+        currentPage <= DataHeroAll.pagination.totalPages &&
+        DataHeroAll.items.length != DataHeroAll.pagination.totalItems) 
+        {
+        let page = currentPage;
+        if (DataHeroAll.pagination.totalItems - DataHeroAll.items.length < 24) {
+          page = DataHeroAll.pagination.totalPages;
         }
-      } else {
-        if (
-          fetching &&
-          currentPage <= DataHeroAll.pagination.totalPages &&
-          DataHeroAll.items.length != DataHeroAll.pagination.totalItems
-        ) {
-          let page = currentPage;
-          if (DataHeroAll.pagination.totalItems - DataHeroAll.items.length < 24) {
-            page = DataHeroAll.pagination.totalPages;
-          }
-          const keyValue = localStorage.getItem("searchInput") || '';
-          console.log(keyValue);
-          console.log("h");
-          
-          
-          fetchPeople({ sectionId: NumberSectionId, page: page, name: keyValue })
+        const keyValue = localStorage.getItem("searchInput") || "";
+
+        fetchPeople({ sectionId: NumberSectionId, page: page, name: keyValue })
           .then((response) => {
             if (response.data) {
               dispatch(addHeroes(response.data));
@@ -90,35 +81,32 @@ export default function FiledData() {
             }
           })
           .finally(() => setFetching(false));
-        }
-        
-        console.log('gggggggggggg');
-        
       }
-      console.log('kkkkkkkk');
+    }
   }, [fetching]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     resetTimer();
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
     localStorage.setItem("scrollTop", scrollTop.toString());
-    // console.log('wer');
-    const isNearBottom = scrollHeight - (scrollTop + clientHeight) < 400;
+
+    const isNearBottom = scrollHeight - (scrollTop + clientHeight) < 1200;
     if (isNearBottom) {
-      // console.log('rrrrr');
-      
       if (
-          currentPage <= DataHeroAll.pagination.totalPages &&
-          DataHeroAll.items.length != DataHeroAll.pagination.totalItems
-        ){
-          setFetching(true);
-          console.log(fetching);
-        }
-    if (ALL_DATA.items.length == 24) {
-      setCurrentPage(2)
-    }
-      console.log(DataHeroAll.items.length);
+        currentPage <= DataHeroAll.pagination.totalPages &&
+        DataHeroAll.items.length != DataHeroAll.pagination.totalItems
+      ) {
+        setFetching(true);
+      }
+
+      if (currentPage <= DataMemorialAll.pagination.totalPages &&
+        DataMemorialAll.items.length != DataMemorialAll.pagination.totalItems){
+        setFetching(true);
+      }
       
+      if (ALL_DATA.items.length == 24) {
+        setCurrentPage(2);
+      }
     }
   };
 

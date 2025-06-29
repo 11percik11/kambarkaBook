@@ -101,7 +101,7 @@ export default function MainPage() {
                 key={index}
                 onClick={() => HandleClickInput(item.id)}
                 className={styles.mainPage__container_boxField_cardField}
-                imgUrl={`https://api-kambarka-memory-book.itlabs.top${item.image}`}
+                imgUrl={`http://api-kambarka-memory-book.itlabs.top${item.image}`}
                 >
                   {item.title}
                 </CardField>

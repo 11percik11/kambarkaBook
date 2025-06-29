@@ -86,8 +86,7 @@ export default function HeaderSearch({
       const event = new Event("input", { bubbles: true });
       inputRef.current.dispatchEvent(event);
       inputRef.current.focus();
-      
-      // Clear from localStorage
+    
       if (storageKey) {
         localStorage.removeItem(storageKey);
       }

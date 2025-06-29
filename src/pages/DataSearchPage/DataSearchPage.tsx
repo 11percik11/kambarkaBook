@@ -63,9 +63,6 @@ export default function DataSearch() {
 
   const [triggerGetPeople] = useLazyGetPeopleQuery();
   const HandleClickInput = () => {
-    // if (true) {
-    //   return
-    // }
     localStorage.removeItem("scrollTop");
     triggerGetPeople({
       sectionId: NumberSectionId,
@@ -76,7 +73,7 @@ export default function DataSearch() {
         dispatch(setHeroes(data));
       })
       .catch((error) => {
-        console.error("Ошибка при фильтрации:", error);
+        console.error("Ошибка при фильтраци:", error);
       });
   };
 
@@ -109,7 +106,7 @@ export default function DataSearch() {
       }}
     >
       <HeaderSearch
-        onClick={() => localStorage.removeItem("searchInput")}
+        onClick={() => {localStorage.removeItem("searchInput"); localStorage.removeItem("scrollTop");}}
         funClearData={() => dispatch(clearHeroes())}
         variantHeader={
           NumberSectionId == 7 || NumberSectionId == 8 ? "link" : "search"

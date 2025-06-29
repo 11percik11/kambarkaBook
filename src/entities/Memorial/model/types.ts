@@ -2,6 +2,7 @@ export type Memorial = {
     id: number;
     title: string;
     place: string;
+    name: string;
     setupDate: string;
     updateDate: string; 
     description: string;

@@ -16,7 +16,7 @@ export default function InformationMemoryDataID({data}:InformationMemoryDataIDPr
                   Наименование
                 </div>
                 <p className={styles.InformationMemoryDataID__field_textInformation}>
-                  {data?.title}
+                  {data?.name}
                 </p>
               </div>
             )}

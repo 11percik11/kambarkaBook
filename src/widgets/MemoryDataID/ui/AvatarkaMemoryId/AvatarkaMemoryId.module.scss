@@ -17,6 +17,20 @@
         overflow: hidden;
         border-radius: 60px;
 
+    &_arrowRight {
+      width: 96px;
+      height: 96px;
+      background: #be333399;
+      border-radius: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      right: 48px;
+    }
+
     &_arrowLeft {
       width: 96px;
       height: 96px;
@@ -31,7 +45,7 @@
       left: 48px;
     }
 
-    &_arrowRirht {
+    &_arrowRight {
       width: 96px;
       height: 96px;
       background: #be333399;

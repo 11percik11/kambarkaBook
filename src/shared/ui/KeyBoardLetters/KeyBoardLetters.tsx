@@ -131,8 +131,9 @@ export default function KeyBoardLetters({
       }
 
       targetInput.value = newValue;
-      // localStorage.setItem("valueSearch", newValue)
+
       setInternalValue(newValue);
+      clickInput?.();
       localStorage.setItem("keyValue", newValue)
 
       const event = new Event("input", { bubbles: true });

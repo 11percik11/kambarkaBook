@@ -83,11 +83,12 @@ export default function CastomVideo({
           blockTimeUpdateRef.current = false;
         }, 300);
       }
-
+      dispatch(modelActive({ active: false }));
       video.play();
       setIsPlaying(true);
       showControlsTemporarily();
     } else {
+      dispatch(modelActive({ active: true }));
       video.pause();
       setIsPlaying(false);
       showControlsTemporarily();
@@ -102,19 +103,57 @@ export default function CastomVideo({
     }
   };
 
-  const toggleFullscreen = () => {
-    const container = containerRef.current;
-    if (!container) return;
+  // const toggleFullscreen = () => {
+  //   const container = containerRef.current;
+  //   if (!container) return;
 
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-      dispatch(modelActive({ active: true }));
-      setFunVideoTriger?.(false);
-    } else {
-      container.requestFullscreen();
-      dispatch(modelActive({ active: false }));
-    }
+  //   if (document.fullscreenElement) {
+  //     document.exitFullscreen();
+  //     dispatch(modelActive({ active: true }));
+  //     setFunVideoTriger?.(false);
+  //   } else {
+  //     container.requestFullscreen();
+  //     dispatch(modelActive({ active: false }));
+  //   }
+  // };
+
+  //   const toggleFullscreen = () => {
+  //   setIsFullscreen((prev) => {
+  //     const next = !prev;
+  //     dispatch(modelActive({ active: !next }));
+  //     setFunVideoTriger?.(next);
+  //     // setFunVideoTriger?.(false);
+  //     return next;
+  //   });
+  // };
+
+  const toggleFullscreen = () => {
+    setIsFullscreen((prev) => {
+      const next = !prev;
+      const video = videoRef.current;
+      if (video?.paused || IconVideo) {
+        dispatch(modelActive({ active: true }));
+      } else {
+        dispatch(modelActive({ active: false }));
+      }
+      setFunVideoTriger?.(next);
+
+      // Откатываем и останавливаем ТОЛЬКО если это было открыто через иконку
+      if (!next && IconVideo) {
+        const video = videoRef.current;
+        if (video) {
+          video.pause();
+          video.currentTime = 0;
+          setCurrentTime(0);
+          setIsPlaying(false);
+          setIsEnded(false);
+        }
+      }
+
+      return next;
+    });
   };
+  
 
   useEffect(() => {
     const video = videoRef.current;
@@ -146,6 +185,7 @@ export default function CastomVideo({
 
     const handleEnded = () => {
       // cancelAnimationFrame(animationFrameId);
+      dispatch(modelActive({ active: true }));
       setIsPlaying(false);
       setIsEnded(true);
       setShowControls(true);
@@ -264,19 +304,22 @@ export default function CastomVideo({
 
   useEffect(() => {
     setIsPlaying(false);
+    {
+      dispatch(modelActive({ active: true }));
+    }
   }, [src]);
 
   return (
     <div
       className={`${styles.castomVideo} ${className} ${
-        isFullscreen ? styles.fullscreen : ""
+        isFullscreen ? styles.fakeFullscreen : ""
       }`}
       ref={containerRef}
     >
       {isFullscreen && (
         <div
           className={`${styles.fullscreenHeader} ${
-            showControls ? styles.visible : styles.hidden
+            showControls || !isPlaying ? styles.visible : styles.hidden
           }`}
         >
           <SmartText className={styles.castomVideo__title} tag="span">
@@ -313,7 +356,7 @@ export default function CastomVideo({
       {(!IconVideo || isFullscreen) && (
         <div
           className={`${styles.controlsWrapper} ${
-            showControls ? styles.visible : styles.hidden
+            showControls || !isPlaying ? styles.visible : styles.hidden
           }`}
         >
           <div className={styles.controls}>

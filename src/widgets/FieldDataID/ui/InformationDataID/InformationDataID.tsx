@@ -289,7 +289,7 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                           className={styles.informationDataID__awards_imgMedal}
                           src={
                             award.image
-                              ? `https://api-kambarka-memory-book.itlabs.top${award.image}`
+                              ? `http://api-kambarka-memory-book.itlabs.top${award.image}`
                               : medal_noto
                           }
                           alt=""
@@ -325,7 +325,7 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
         {numberPage == 2 && (
           <div className={styles.informationDataID__aditionally}>
             {data?.peopleMedia.map((mediaFile) => {
-              const mediaUrl = `https://api-kambarka-memory-book.itlabs.top${mediaFile.media}`;
+              const mediaUrl = `http://api-kambarka-memory-book.itlabs.top${mediaFile.media}`;
               const extension = mediaUrl.split(".").pop()?.toLowerCase();
 
               const isImage = ["jpg", "jpeg", "png", "gif", "webp"].includes(

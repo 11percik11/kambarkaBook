@@ -4,6 +4,7 @@
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  
 
   &__title {
     font-size: 80px;
@@ -197,4 +198,18 @@
   .fullscreen & {
     padding: 0 80px 80px 80px;
   }
+}
+
+.fakeFullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 99;
+  background-color: black;
+  border-radius: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

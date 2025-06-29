@@ -69,16 +69,29 @@
 
 //   const togglePlay = () => {
 //     const video = videoRef.current;
-//     if (video) {
-//       if (video.paused) {
-//         video.play();
-//         setIsPlaying(true);
-//         showControlsTemporarily();
-//       } else {
-//         video.pause();
-//         setIsPlaying(false);
-//         showControlsTemporarily();
+//     if (!video) return;
+
+//     if (video.paused) {
+//       if (isEnded) {
+//         video.currentTime = 0;
+//         setCurrentTime(0);
+//         setIsEnded(false);
+
+//         // Блокируем обновление времени на короткое время после сброса
+//         blockTimeUpdateRef.current = true;
+//         setTimeout(() => {
+//           blockTimeUpdateRef.current = false;
+//         }, 300);
 //       }
+
+//       video.play();
+//       setIsPlaying(true);
+//       showControlsTemporarily();
+//     } else {
+//       dispatch(modelActive({ active: true }));
+//       video.pause();
+//       setIsPlaying(false);
+//       showControlsTemporarily();
 //     }
 //   };
 
@@ -112,7 +125,14 @@
 //     const updateInterval = 100; // Обновлять состояние не чаще чем раз в 100мс
 
 //     const handleTimeUpdate = (timestamp: any) => {
-//       if (!lastUpdateTime || timestamp - lastUpdateTime >= updateInterval) {
+//       // if (!lastUpdateTime || timestamp - lastUpdateTime >= updateInterval) {
+//       //   setCurrentTime(video.currentTime);
+//       //   lastUpdateTime = timestamp;
+//       // }
+//       if (
+//         !blockTimeUpdateRef.current &&
+//         timestamp - lastUpdateTime >= updateInterval
+//       ) {
 //         setCurrentTime(video.currentTime);
 //         lastUpdateTime = timestamp;
 //       }
@@ -180,6 +200,8 @@
 //     return `${minutes}:${seconds}`;
 //   };
 
+//   const blockTimeUpdateRef = useRef(false);
+
 //   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
 //     const video = videoRef.current;
 //     if (!video) return;
@@ -198,6 +220,12 @@
 //       // setIsPlaying(true);
 //       setIsEnded(false); // сброс, т.к. мы перезапустили
 //     }
+
+//     // Пропустить обновление currentTime через RAF на короткое время
+//     blockTimeUpdateRef.current = true;
+//     setTimeout(() => {
+//       blockTimeUpdateRef.current = false;
+//     }, 200);
 //   };
 
 //   // Клик по громкости
@@ -217,9 +245,8 @@
 //     setIsMuted(video.muted);
 //   };
 //   // console.log(duration);
-//   console.log(currentTime);
-  
-  
+//   // console.log(currentTime);
+
 //   const progressPercent = duration ? (currentTime / duration) * 100 : 0;
 
 //   const getVolumeIcon = () => {
@@ -238,7 +265,7 @@
 
 //   useEffect(() => {
 //     setIsPlaying(false);
-//   }, [src])
+//   }, [src]);
 
 //   return (
 //     <div
@@ -253,7 +280,9 @@
 //             showControls ? styles.visible : styles.hidden
 //           }`}
 //         >
-//           <SmartText className={styles.castomVideo__title} tag="span">{title}</SmartText>
+//           <SmartText className={styles.castomVideo__title} tag="span">
+//             {title}
+//           </SmartText>
 //           <button onClick={toggleFullscreen} className={styles.closeBtn}>
 //             <img src={CrossVideo} alt="" />
 //           </button>
