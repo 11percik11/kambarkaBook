@@ -9,7 +9,7 @@ import { useLazyGetPeopleQuery } from "../../entities/Hero/api/HeroApi";
 import { useDispatch } from "react-redux";
 import { setHeroes } from "../../entities/Hero/api/HeroSlice";
 import Loader from "../../shared/ui/Loader/Loader";
-import { useLazyAllMemorialQuery } from "../../entities/Memorial/api/MemorialApi";
+import { useLazyAllFreeQuery, useLazyAllMemorialQuery } from "../../entities/Memorial/api/MemorialApi";
 import { setMemorial } from "../../entities/Memorial/api/MemorialSlice";
 
 export default function MainPage() {
@@ -18,9 +18,22 @@ export default function MainPage() {
   const { data, isLoading } = useGetSectionQuery();
   const [triggerGetPeople] = useLazyGetPeopleQuery();
   const [triggerAllMemorial] = useLazyAllMemorialQuery();
+  const [triggerAllFree] = useLazyAllFreeQuery();
   const HandleClickInput = (sectionId: number) => {
-    if (sectionId == 7 || sectionId == 8) {
+    if (sectionId == 7) {
       triggerAllMemorial({
+        sectionId: sectionId,
+      })
+        .unwrap()
+        .then((data) => {
+          dispatch(setMemorial(data));
+          navigate("search", { state: { sectionId } });
+        })
+        .catch((error) => {
+          console.error("Ошибка при фильтрации:", error);
+        });    
+    } else if (sectionId == 8){
+      triggerAllFree({
         sectionId: sectionId,
       })
         .unwrap()
@@ -101,7 +114,7 @@ export default function MainPage() {
                 key={index}
                 onClick={() => HandleClickInput(item.id)}
                 className={styles.mainPage__container_boxField_cardField}
-                imgUrl={`http://api-kambarka-memory-book.itlabs.top${item.image}`}
+                imgUrl={`https://api-kambarka-memory-book.itlabs.top${item.image}`}
                 >
                   {item.title}
                 </CardField>

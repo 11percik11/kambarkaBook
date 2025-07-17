@@ -19,7 +19,11 @@ import DatePng from "../../shared/assets/foto/jpg/date.jpg";
 import memorialPng from "../../shared/assets/foto/jpg/memorial.jpg";
 import siriaPng from "../../shared/assets/foto/jpg/siria bg.jpg";
 
-import { useAllMemorialQuery } from "../../entities/Memorial/api/MemorialApi";
+import {
+  useAllFreeQuery,
+  useAllMemorialQuery,
+  useLazyAllFreeQuery,
+} from "../../entities/Memorial/api/MemorialApi";
 import { setMemorial } from "../../entities/Memorial/api/MemorialSlice";
 import Loader from "../../shared/ui/Loader/Loader";
 
@@ -37,6 +41,10 @@ export default function DataSearch() {
   });
 
   const { data: dataMemorial } = useAllMemorialQuery({
+    sectionId: NumberSectionId,
+  });
+
+  const { data: dataFree } = useAllFreeQuery({
     sectionId: NumberSectionId,
   });
 
@@ -62,8 +70,24 @@ export default function DataSearch() {
   ];
 
   const [triggerGetPeople] = useLazyGetPeopleQuery();
+  const [triggerGetFree] = useLazyAllFreeQuery();
   const HandleClickInput = () => {
     localStorage.removeItem("scrollTop");
+    if (NumberSectionId == 8) {
+      triggerGetFree({
+      sectionId: NumberSectionId,
+      title: inputRef.current?.value,
+    })
+      .unwrap()
+      .then((data) => {
+        dispatch(setMemorial(data));
+      })
+      .catch((error) => {
+        console.error("Ошибка при фильтраци:", error);
+      });
+      return
+    }
+
     triggerGetPeople({
       sectionId: NumberSectionId,
       name: inputRef.current?.value,
@@ -75,6 +99,7 @@ export default function DataSearch() {
       .catch((error) => {
         console.error("Ошибка при фильтраци:", error);
       });
+
   };
 
   useEffect(() => {
@@ -85,9 +110,13 @@ export default function DataSearch() {
 
   useEffect(() => {
     if (dataAct.length == 0 && dataMemorial) {
-      dispatch(setMemorial(dataMemorial));
+      if (NumberSectionId == 7) {
+        dispatch(setMemorial(dataMemorial));
+      } else if (NumberSectionId == 8 && dataFree) {
+        dispatch(setMemorial(dataFree));
+      }
     }
-  }, [dataMemorial]);
+  }, [dataMemorial, dataFree]);
 
   if (isLoading)
     return (
@@ -106,11 +135,12 @@ export default function DataSearch() {
       }}
     >
       <HeaderSearch
-        onClick={() => {localStorage.removeItem("searchInput"); localStorage.removeItem("scrollTop");}}
+        onClick={() => {
+          localStorage.removeItem("searchInput");
+          localStorage.removeItem("scrollTop");
+        }}
         funClearData={() => dispatch(clearHeroes())}
-        variantHeader={
-          NumberSectionId == 7 || NumberSectionId == 8 ? "link" : "search"
-        }
+        variantHeader={NumberSectionId == 7 ? "link" : "search"}
         clickInput={HandleClickInput}
         setVisable={setVisableKeyboard}
         inputRef={inputRef}

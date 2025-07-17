@@ -13,4 +13,7 @@ export const {
   useGetMemorialDataAcceptQuery,
   useAllMemorialQuery,
   useLazyAllMemorialQuery,
+  useGetFreeDataAcceptQuery,
+  useAllFreeQuery,
+  useLazyAllFreeQuery
 } = MemorialApi;

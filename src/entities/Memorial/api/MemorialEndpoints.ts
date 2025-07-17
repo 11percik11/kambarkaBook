@@ -1,5 +1,5 @@
 import { EndpointBuilder, fetchBaseQuery } from "@reduxjs/toolkit/query";
-import { Memorial, MemorialResponseApi } from "../model/types";
+import { Free, FreeResponseApi, Memorial, MemorialResponseApi } from "../model/types";
 
 export const MemorialEndpoints = (
   builder: EndpointBuilder<
@@ -25,4 +25,27 @@ export const MemorialEndpoints = (
       return `/memorial?${query}`;
     },
   }),
+
+  getFreeDataAccept: builder.query<Free, number>({
+    query: (id) => `/free/${id}`,
+  }),
+  allFree: builder.query<
+    FreeResponseApi,
+    { sectionId?: number; page?: number, title?: string}
+  >({
+    query: (params = {}) => {
+      let query = `page=${params.page || 1}&itemsPerPage=24`;
+
+      if (params.sectionId) {
+        query += `&sectionId=${params.sectionId}`;
+      }
+
+      if (params.title) {
+        query += `&title=${encodeURIComponent(params.title)}`;
+      }
+
+      return `/free?${query}`;
+    },
+  }),
+
 });

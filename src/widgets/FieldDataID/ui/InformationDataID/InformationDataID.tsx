@@ -289,7 +289,7 @@ export default function InformationDataID({ data }: InformationDataIDProps) {
                           className={styles.informationDataID__awards_imgMedal}
                           src={
                             award.image
-                              ? `http://api-kambarka-memory-book.itlabs.top${award.image}`
+                              ? `https://api-kambarka-memory-book.itlabs.top${award.image}`
                               : medal_noto
                           }
                           alt=""

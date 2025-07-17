@@ -239,7 +239,7 @@ export default function KeyBoardLetters({
               if (!targetInput) return;
 
               const current = parseInt(targetInput.value) || 0;
-              const updated = Math.min(current + 1, maxValue || Infinity); // 🔒 максимум из props
+              const updated = Math.min(current + 1, maxValue || Infinity); // максимум из props
 
               if (updated !== current) {
                 targetInput.value = String(updated);

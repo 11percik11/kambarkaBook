@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MemorialResponseApi } from "../model/types";
-// import { M } from "../model/types";
 
 const initialState: MemorialResponseApi = {
   items: [],
@@ -16,10 +15,10 @@ const MemorialDataSlice = createSlice({
   name: "memorialApi",
   initialState,
   reducers: {
-    setMemorial: (_, action: PayloadAction<MemorialResponseApi>) => {
+    setMemorial: (_, action: PayloadAction<any>) => {
       return action.payload;
     },
-    addMemorial: (state, action: PayloadAction<MemorialResponseApi>) => {
+    addMemorial: (state, action: PayloadAction<any>) => {
       return {
         items: [...state.items, ...action.payload.items], // Объединяем массивы
         pagination: action.payload.pagination, // Берем новую пагинацию

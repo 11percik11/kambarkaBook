@@ -1,6 +1,7 @@
 import { MemorialImages } from "../../../../entities/Memorial/model/types";
 import styles from "./AvatarkaMemoryId.module.scss";
-import none_heroImg from "../../../../shared/assets/foto/none_heroImg.png";
+// import none_heroImg from "../../../../shared/assets/foto/none_heroImg.png";
+import horseIcon from "../../../../shared/assets/foto/jpg/horse.png";
 import { useState, useRef } from "react";
 import arrow_img_left_Svg from "../../../../shared/assets/svg/arrow_img_left_Svg.svg";
 import arrow_img_right_Svg from "../../../../shared/assets/svg/arrow_img_right_Svg.svg";
@@ -87,13 +88,13 @@ export default function AvatarkaMemoryId({
         onMouseLeave={handleMouseLeave}
         style={{ cursor: hasMultipleImages ? "grab" : "default" }}
       >
-        {urlImgAvatarka?.length && (
+        {!!urlImgAvatarka?.length && (
           <div
             className={styles.avatarkaDataID__photoBlurBackground}
             style={{
               backgroundImage:
                 `url(https://api-kambarka-memory-book.itlabs.top${urlImgAvatarka[currentImageIndex]?.image})` ||
-                none_heroImg,
+                horseIcon,
             }}
           ></div>
         )}
@@ -102,7 +103,7 @@ export default function AvatarkaMemoryId({
           src={
             urlImgAvatarka?.length
               ? `https://api-kambarka-memory-book.itlabs.top${urlImgAvatarka[currentImageIndex]?.image}`
-              : none_heroImg
+              : horseIcon
           }
           draggable={false}
           className={styles.avatarkaDataID__image}
@@ -119,7 +120,7 @@ export default function AvatarkaMemoryId({
             <img src={arrow_img_left_Svg} alt="" />
           </div>
         )}
-        {urlImgAvatarka?.length &&
+        {!!urlImgAvatarka?.length &&
           currentImageIndex !== urlImgAvatarka.length - 1 && (
             <div
               onClick={() =>

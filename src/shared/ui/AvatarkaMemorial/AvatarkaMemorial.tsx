@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./AvatarkaMemorial.module.scss";
-import none_heroImg from '../../assets/foto/none_heroImg.png';
+import horseIcon from '../../assets/foto/jpg/horse.png';
 import { MemorialImage } from "../../../entities/Memorial/model/types";
 
 interface AvatarkaProps {
@@ -12,7 +12,6 @@ export default function AvatarkaMemorial({ item, className }: AvatarkaProps) {
   const navigate = useNavigate();
     const location = useLocation();
     const sectionId = location.state.sectionId;
-
   
   return (
     <div
@@ -21,7 +20,7 @@ export default function AvatarkaMemorial({ item, className }: AvatarkaProps) {
     >
       <img
         className={styles.avatarka__img}
-        src={item?.image ? `https://api-kambarka-memory-book.itlabs.top${item?.image}` : none_heroImg}
+        src={item?.image ? `https://api-kambarka-memory-book.itlabs.top${item?.image}` : horseIcon}
         alt=""
       />
       <div className={styles.avatarka__text}>

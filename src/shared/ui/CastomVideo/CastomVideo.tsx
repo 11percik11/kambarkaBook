@@ -77,7 +77,6 @@ export default function CastomVideo({
         setCurrentTime(0);
         setIsEnded(false);
 
-        // Блокируем обновление времени на короткое время после сброса
         blockTimeUpdateRef.current = true;
         setTimeout(() => {
           blockTimeUpdateRef.current = false;
